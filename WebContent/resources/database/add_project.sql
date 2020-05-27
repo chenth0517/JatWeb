@@ -1,0 +1,16 @@
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,1, 'SIDOPROJ_American_EB5','美国EB-5');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,2, 'SIDOPROJ_American_EB1','美国EB-1');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,3, 'SIDOPROJ_Canada_Quebec','加拿大魁省');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,4, 'SIDOPROJ_Canada_Federal','加拿大联邦');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,5, 'SIDOPROJ_Canada_NB','加拿大NB省');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,6, 'SIDOPROJ_Canada_Sasa','加拿大萨省');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,7, 'SIDOPROJ_Canada_PEI','加拿大PEI');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,8, 'SIDOPROJ_Canada_MAN','加拿大曼省');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,9, 'SIDOPROJ_Australia_188A','澳洲188A');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,10,'SIDOPROJ_Australia_188B','澳洲188B');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,11,'SIDOPROJ_Australia_188C','澳洲188C');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,12,'SIDOPROJ_Australia_132','澳洲132');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,13,'SIDOPROJ_Malta_NationalDebt','马耳他国债');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,14,'SIDOPROJ_Grenada','格林纳达');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,15,'SIDOPROJ_Greece','希腊');
+insert into sys_dict_item(dict_id,value,code,display_value) values(9,16,'SIDOPROJ_Cyprus','塞浦路斯');

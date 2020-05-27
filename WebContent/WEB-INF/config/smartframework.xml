@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/websocket
+        				http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+		<mvc:default-servlet-handler/>
+<!-- weblogic配置 -->	
+<!-- 		<mvc:default-servlet-handler default-servlet-name="FileServlet"/> -->
+
+    <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+    	<property name="prefix"><value>/</value></property>
+    	<property name="suffix"><value>.jsp</value></property>
+    	<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
+	
+	<!-- 引入配置文件 -->
+	<bean id="propertyConfigurer"
+		class="com.smartframework.web.core.config.DecryptPropertyPlaceholderConfigurer">
+			<property name="locations">  
+				<!-- 加密配置 -->
+<!-- 		       <list>   -->
+<!-- 		          <value>WEB-INF/config/encrypted/en_jdbc.properties</value>   -->
+<!-- 		        </list>   -->
+				<!-- 非加密配置 -->
+		       <list>  
+		          <value>WEB-INF/config/jdbc.properties</value>  
+		        </list>  
+		    </property>
+		    <property name="fileEncoding" value="UTF-8"/>  
+		    <!-- 非加密配置时禁用该密钥 -->
+<!--         	<property name="keyLocation" value="WEB-INF/config/encrypted/key.k" /> -->
+	</bean>
+	
+	<!-- 阿里 druid 数据库连接池 -->  
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">    
+	     <!-- 数据库基本信息配置 -->  
+	     <property name="url" value="${jdbc.url}" />    
+	     <property name="username" value="${jdbc.username}" />    
+	     <property name="password" value="${jdbc.password}" />    
+	     <property name="driverClassName" value="${jdbc.driver}" />    
+	     <property name="filters" value="${druid.filters}" />    
+	      <!-- 最大并发连接数 -->  
+	     <property name="maxActive" value="${druid.maxActive}" />  
+	     <!-- 初始化连接数量 -->  
+	     <property name="initialSize" value="${druid.initialSize}" />  
+	     <!-- 配置获取连接等待超时的时间 -->  
+	     <property name="maxWait" value="${druid.maxWait}" />  
+	     <!-- 最小空闲连接数 -->  
+	     <property name="minIdle" value="${druid.minIdle}" />    
+	     <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+	     <property name="timeBetweenEvictionRunsMillis" value ="${druid.timeBetweenEvictionRunsMillis}" />  
+	     <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+	     <property name="minEvictableIdleTimeMillis" value ="${druid.minEvictableIdleTimeMillis}" />    
+	     <property name="validationQuery" value="${druid.validationQuery}" />    
+	     <property name="testWhileIdle" value="${druid.testWhileIdle}" />    
+	     <property name="testOnBorrow" value="${druid.testOnBorrow}" />    
+	     <property name="testOnReturn" value="${druid.testOnReturn}" />    
+	     <property name="maxOpenPreparedStatements" value ="${druid.maxOpenPreparedStatements}" />  
+	     <!-- 打开 removeAbandoned 功能 -->  
+	     <property name="removeAbandoned" value="${druid.removeAbandoned}" />  
+	     <!-- 1800 秒，也就是 30 分钟 -->  
+	     <property name="removeAbandonedTimeout" value ="${druid.removeAbandonedTimeout}" />  
+	     <!-- 关闭 abanded 连接时输出错误日志 -->     
+	     <property name="logAbandoned" value="${druid.logAbandoned}" />  
+	</bean>  
+	
+	
+	<bean id="sessionFacotry" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!-- Hibernate 参数配置 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm2ddl}</prop>
+				<prop key="hibernate.show_sql">${jdbc.show_sql}</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.smartframework.web</value>
+				<value>com.sf.web</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">   
+         <property name="dataSource" ref="dataSource"/>   
+    </bean>
+    
+	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="${jdbc.database}"/>
+		<property name="databasePlatform" value="${jdbc.dialect}"/>
+        <property name="generateDdl" value="false" />
+        <property name="showSql" value="${jdbc.show_sql}" />
+    </bean>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+<!-- 		<property name="packagesToScan" value="com.sf.web"/> -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.smartframework.web</value>
+				<value>com.sf.web</value>
+			</list>
+		</property>
+		<!--<property name="persistenceUnitName" value="smartMvcPersistence" />-->
+    	<!--<property name="jpaProperties" ref="jpaProviderProperties" />-->
+    	<property name="jpaVendorAdapter" ref="jpaAdapter"/> 
+    	<property name="persistenceUnitPostProcessors">
+        	<util:list>
+               <bean class="com.smartframework.core.smart.SmartPersistenceUnitPostProcessor" />  
+       	 	</util:list>  
+    	</property>
+    	<property name="loadTimeWeaver">
+            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+        </property>
+    </bean>
+    
+    <!-- (事务管理)jap transaction manager-->
+	<bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" /> 
+	</bean>
+	
+	<!-- 创建事务规则 --> 
+	<!-- 表示我们要控制事务的地方，如果方法名开头是add、update和delete，那么使用REQUIRED事务传播方式。那么其他的方法使用REQUIRED事务传播方式，并且是只读 --> 
+	<tx:advice id="txAdvice" transaction-manager="jpaTransactionManager"> 
+		<tx:attributes> 
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" /> 
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" /> 
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="validate*" propagation="REQUIRED" rollback-for="Exception" />
+			<!-- BPM Service中的关键字 -->
+			<tx:method name="deploy*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="*" propagation="REQUIRED" read-only="false" /> 
+		</tx:attributes> 
+	</tx:advice> 
+	<!-- 告知事务的切入点 --> 
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.smartframework.web..service.impl..*.*(..))" />
+	</aop:config>
+	
+	<tx:annotation-driven transaction-manager="jpaTransactionManager"/>
+    <jpa:repositories base-package="com.*.web"
+ 		entity-manager-factory-ref="entityManagerFactory"
+ 		transaction-manager-ref="jpaTransactionManager"/>
+ 	
+ 	<bean class="com.smartframework.core.smart.SmartBeanProcessor"/>
+ 	
+ 	 <!--配置定时任务Quartz 调度Scheduler -->
+  	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+ 		<property name="configLocation" value="/WEB-INF/config/quartz.properties" />
+ 		<property name="dataSource" ref="dataSource" />
+ 		<property name="overwriteExistingJobs" value="true" />
+ 		<property name="autoStartup" value="true" />
+ 	</bean>
+ 	<websocket:handlers allowed-origins="*">
+        <websocket:mapping path="/smartMQ" handler="WebSocketHandler"/>
+        <websocket:handshake-interceptors>
+            <bean class="com.smartframework.core.websocket.WebSocketHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+        <websocket:sockjs/>
+    </websocket:handlers>
+ 	<bean id="WebSocketHandler" class="com.smartframework.core.websocket.WebSocketHandler"/>
+    
+	<!--
+    <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/WebSocket">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:stomp-broker-relay prefix="/topic,/queue" />
+    </websocket:message-broker>
+    -->  
+    
+    <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+        <property name="maxTextMessageBufferSize" value="8192"/>
+        <property name="maxBinaryMessageBufferSize" value="8192"/>
+    </bean>
+    <!-- 以下是工作流配置 -->
+<!--     <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration"> -->
+<!-- 	    <property name="dataSource" ref="dataSource" /> -->
+<!-- 	    <property name="transactionManager" ref="jpaTransactionManager" /> -->
+<!-- 	    <property name="databaseSchemaUpdate" value="true" /> -->
+<!-- 	    <property name="jobExecutorActivate" value="false" /> -->
+<!-- 	    <property name="asyncExecutor" ref="asyncExecutor" /> -->
+<!-- 	    <property name="asyncExecutorEnabled" value="true" /> -->
+<!-- 	    <property name="asyncExecutorActivate" value="false" /> -->
+<!-- 	    <property name="defaultFailedJobWaitTime" value="1" /> -->
+<!-- 	    <property name="asyncFailedJobWaitTime" value="1" /> -->
+<!-- 	    <property name="mailServerHost" value="smtp.163.com" /> -->
+<!-- 	    <property name="mailServerPort" value="25" /> -->
+<!-- 		<property name="mailServerUsername" value="iocs_report"></property>   -->
+<!--         <property name="mailServerPassword" value="800820"></property>   -->
+<!--         <property name="mailServerDefaultFrom" value="iocs_report@163.com"></property>  -->
+		<!-- 解决流程图中文乱码问题 -->
+<!-- 	    <property name="activityFontName" value="宋体"/> -->
+<!-- 	    <property name="labelFontName" value="宋体"/> -->
+<!-- 	    事件监听器 -->
+<!-- 	    <property name="eventListeners">   -->
+<!-- 	      <list>   -->
+<!-- 	        <ref bean="globalEventListener"/>   -->
+<!-- 	      </list>   -->
+<!-- 	    </property> -->
+<!--   </bean> -->
+  
+  <!-- Event listener configuration -->
+<!--   <bean id="globalEventListener" class="com.smartframework.web.system.bpm.listener.GlobalBpmEventListener">   -->
+	<!-- 通过参数注入的方式将Bean定义的Handler注册给GlobalBpmEventListener -->
+<!-- 	<property name="handlers">   -->
+<!-- 	  <map>   -->
+<!-- 	   <entry key="TASK_CREATED" value="com.smartframework.web.system.bpm.handler.impl.BasicTaskCreatedHandler"/>   -->
+<!-- 	   <entry key="TASK_COMPLETED" value="com.smartframework.web.system.bpm.handler.impl.BasicTaskCompleterHandler"/>   -->
+<!-- 	  </map>   -->
+<!-- 	</property>   -->
+<!--   </bean> -->
+  
+<!--   <bean id="asyncExecutor" class="org.activiti.engine.impl.asyncexecutor.DefaultAsyncJobExecutor"> -->
+<!--     <property name="defaultAsyncJobAcquireWaitTimeInMillis" value="1000" /> -->
+<!--     <property name="defaultTimerJobAcquireWaitTimeInMillis" value="1000" /> -->
+<!--   </bean> -->
+  
+<!--   <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"> -->
+<!--     <property name="processEngineConfiguration" ref="processEngineConfiguration" /> -->
+<!--   </bean> -->
+  
+<!--   <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" /> -->
+<!--   <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" /> -->
+<!--   <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" /> -->
+<!--   <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" /> -->
+<!--   <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" /> -->
+</beans>

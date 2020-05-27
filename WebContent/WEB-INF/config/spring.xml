@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context.xsd  
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd">
+    						
+	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+	<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="utf-8" />  
+        <!-- 文件大小最大值 -->
+        <property name="maxUploadSize" value="10485760000" />  
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="4096000" />
+    </bean> 
+	
+	<!-- 引入配置文件 -->
+<!-- 	<bean id="propertyConfigurer" -->
+<!-- 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+<!-- 		<property name="location" value="WEB-INF/config/config.properties" /> -->
+<!-- 	</bean> -->
+<!-- 	<context:component-scan base-package="org.springframework.session.data.redis"></context:component-scan> -->
+	<!-- spring redis config for http session manager -->
+<!--     <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"> -->
+<!--         <property name="maxInactiveIntervalInSeconds" value="3600"></property> -->
+<!--     </bean> -->
+    <!-- redis连接池 -->
+<!--     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"/> -->
+    <!-- redis连接工厂 -->
+<!--     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"> -->
+<!--         <property name="hostName" value="${redis.host}"/> -->
+<!--         <property name="port" value="${redis.port}"/> -->
+<!--         <property name="password" value="${redis.password}"/> -->
+<!--         <property name="timeout" value="${redis.timeout}"/> -->
+<!--         <property name="poolConfig" ref="poolConfig"></property> -->
+<!--     </bean> -->
+</beans>

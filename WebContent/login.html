@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>SmartWeb | Login</title>
+    <link rel="stylesheet" type="text/css" href="./resources/static/sf-ui/sf-ui.min.css">
+    <script>
+        if(window !== top){
+            console.log("location.href: " + location.href);
+            top.location.href = location.href;
+        }
+    </script>
+</head>
+<body>
+<div id="login-form" v-cloak>
+    <el-row type="flex" justify="center" style="margin-top: 150px;" v-show="type==='login'">
+        <el-col :xs="16" :sm="12" :md="8">
+            <el-form ref="loginForm" :model="loginForm" :rules="loginValidate" label-position="top" @submit.native.prevent="handleSubmit('loginForm')">
+                <el-form-item label="账号" prop="username" required>
+                    <el-input type="text" v-model="loginForm.username" placeholder="用户名/邮箱/手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="password" required>
+                    <el-input type="password" v-model="loginForm.password" placeholder="密码"></el-input>
+                </el-form-item>
+<!--                 <el-form-item label="验证码"> -->
+<!--                     <el-row :gutter="2"> -->
+<!--                         <el-col :span="8"> -->
+<!--                             <el-input type="text" v-model="loginForm.validate_code"></el-input> -->
+<!--                         </el-col> -->
+<!--                         <el-col :span="5"> -->
+<!--                             <img :src="src" title="看不清点击刷新验证码" @click="verificationClick"> -->
+<!--                         </el-col> -->
+<!--                     </el-row> -->
+<!--                 </el-form-item> -->
+                <el-form-item label="验证码" prop="validate_code" style="margin-bottom: 5px;display:none;">
+                    <el-row :gutter="2">
+                        <el-col :span="8">
+                            <el-input type="text" v-model="loginForm.validate_code"></el-input>
+                        </el-col>
+                        <el-col :span="5">
+                            <el-button type="success" :disabled="loginForm.code_btn.disabled" @click="toWaitSeconds"><span v-text="loginForm.code_btn.str"></span></el-button>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
+                <el-form-item prop="remember_checkbox" style="margin-bottom: 5px;">
+                    <el-checkbox v-model="loginForm.remember_checkbox">记住我</el-checkbox>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" native-type="submit" style="width: 100%;">登录</el-button>
+                </el-form-item>
+            </el-form>
+            <div>
+                <el-button type="text" @click="type='reset'">忘记密码？</el-button><br>
+                <span style="font-size: 14px;">没有账户？
+                	<el-button type="text" @click="type='register'">注册！</el-button>
+                	<el-button type="text" @click="type='register_admin'">注册管理员账号！</el-button>
+                </span>
+            </div>
+        </el-col>
+    </el-row>
+    <el-row type="flex" justify="center" v-show="type==='register'">
+        <el-col :xs="16" :sm="12" :md="8">
+            <h2 style="padding: 10px 0;">新用户注册</h2>
+            <el-form ref="registerForm" :model="registerForm" :rules="registerValidate" label-position="top"  @submit.native.prevent="handleSubmit('registerForm')">
+                <el-form-item label="用户名" prop="username" required>
+                    <el-input type="text" v-model="registerForm.username" placeholder="用户名"></el-input>
+                </el-form-item>
+                <!-- 根据业务需要设置验证码通知方式,此处选择邮箱接受验证码 -->
+                <el-form-item label="手机号" prop="phone" required>
+                    <el-input type="text" v-model="registerForm.phone" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email" required>
+                    <el-input type="text" v-model="registerForm.email" placeholder="邮箱" style="width:80%;"></el-input>
+                    <el-button type="primary" native-type="button" style="width: 100px;" @click="sendUserRegisgerCode()">发送验证码</el-button>
+                </el-form-item>
+                <el-form-item label="验证码" prop="validateCode" required>
+                    <el-input type="text" v-model="registerForm.validateCode" placeholder="邮箱收到的验证码"></el-input>
+                </el-form-item>
+                <el-form-item label="登录密码" prop="password" required>
+                    <el-input type="password" v-model="registerForm.password" placeholder="登录密码"></el-input>
+                </el-form-item>
+                <el-form-item label="重复密码" prop="repeatPassword" required>
+                    <el-input type="password" v-model="registerForm.repeatPassword" placeholder="重复密码"></el-input>
+                </el-form-item>
+                <el-form-item prop="agreeCheckBox" style="margin-bottom: 5px;">
+                    <el-checkbox v-model="registerForm.agreeCheckBox">我同意 <a href="#">服务条款</a> 和 <a href="#">隐私条款</a></el-checkbox>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="success" native-type="submit" style="width: 100%;">注册</el-button>
+                </el-form-item>
+            </el-form>
+            <div>
+                <el-button type="text" @click="type='login'">返回登录</el-button><br>
+            </div>
+        </el-col>
+    </el-row>
+    <el-row type="flex" justify="center" v-show="type==='register_admin'">
+        <el-col :xs="16" :sm="12" :md="8">
+            <h2 style="padding: 10px 0;">注册默认管理员</h2>
+            <el-form ref="registerAdminForm" :model="registerAdminForm" :rules="registerAdminValidate" label-position="top"  @submit.native.prevent="handleSubmit('registerAdminForm')">
+                <el-form-item label="手机号" prop="phone" required>
+                    <el-input type="text" v-model="registerAdminForm.phone" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email" required>
+                    <el-input type="text" v-model="registerAdminForm.email" placeholder="管理员收取通知的邮箱" style="width:80%;"></el-input>
+                    <el-button type="primary" native-type="button" style="width: 100px;" @click="sendAdminRegisgerCode()">发送验证码</el-button>
+                </el-form-item>
+                <el-form-item label="验证码" prop="validateCode" required>
+                    <el-input type="text" v-model="registerAdminForm.validateCode" placeholder="邮箱收到的验证码"></el-input>
+                </el-form-item>
+                <el-form-item label="登录密码" prop="password" required>
+                    <el-input type="password" v-model="registerAdminForm.password" placeholder="登录密码"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="success" native-type="submit" style="width: 100%;">创建</el-button>
+                </el-form-item>
+            </el-form>
+            <div>
+                <el-button type="text" @click="type='login'">返回登录</el-button><br>
+            </div>
+        </el-col>
+    </el-row>
+    <el-row type="flex" justify="center" v-show="type==='reset'">
+        <el-col :xs="16" :sm="12" :md="8">
+            <h2 style="padding: 10px 0;">重置密码</h2>
+            <el-form ref="resetForm" :model="resetForm" :rules="resetValidate" label-position="top" @submit.native.prevent="handleSubmit('resetForm')">
+                <el-form-item label="输入注册邮箱/手机号/用户名" prop="username" required>
+                    <el-input type="text" v-model="resetForm.username" placeholder="输入注册邮箱/手机号/用户名"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="info" native-type="submit" style="width: 100%;">发送重置请求</el-button>
+                </el-form-item>
+            </el-form>
+            <div>
+                <el-button type="text" @click="type='login'">返回登录</el-button><br>
+            </div>
+        </el-col>
+    </el-row>
+</div>
+</body>
+<script type="text/javascript" src="./resources/static/vue/vue.js"></script>
+<script type="text/javascript" src="./resources/static/sf-ui/sf-ui.js"></script>
+<script type="text/javascript" src="./resources/js/encryptor.js"></script>
+<script>
+    const phoneValidate = function (rule, value, callback) {
+        if (value === '') {
+            callback(new Error('手机号不能为空'));
+        }else{
+            var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+            if(!reg.test(value)){
+                callback(new Error('手机号码格式不正确'));
+            }else{
+                callback();
+            }
+        }
+    };
+    const passwordValidate = function (rule, value, callback) {
+        if (value === '') {
+            callback(new Error('请输入密码'));
+        }else{
+            if(logInVm.registerForm.repeatPassword !== ''){
+                logInVm.$refs.registerForm.validateField('repeatPassword');
+            }
+            callback();
+        }
+    };
+    const passwordCheckValidate = function (rule, value, callback) {
+        if (value === '') {
+            callback(new Error('请再次输入密码'));
+        }else if(value !== logInVm.registerForm.password){
+            callback(new Error('两次输入密码不一致!'));
+        }else{
+            callback();
+        }
+    };
+    var logInVm = new Vue({
+        el: '#login-form',
+        data: {
+            type: 'login',
+            src: 'generateValidate.do?height=36',
+            loginForm: {
+                username: localStorage.getItem('smart_username'),
+                password: localStorage.getItem('smart_password'),
+                validate_code: '',
+                code_btn: {
+                    disabled: false,
+                    str: '发送验证码'
+                },
+                remember_checkbox: eval(localStorage.getItem('smart_remember_me')) || false
+            },
+            loginValidate: {
+                username: [
+                    {required: true, message: '账号不能为空', trigger: 'blur'}
+                ],
+                password: [
+                    {required: true, message: '密码不能为空', trigger: 'blur'}
+                ]
+            },
+            registerForm: {
+                username: '',
+                phone: '',
+                email: '',
+                password: '',
+                repeatPassword: '',
+                agreeCheckBox: false,
+            	validateCode:''
+            },
+            registerAdminForm:{
+            	phone:'',
+            	email:'',
+            	password:'',
+            	validateCode:''
+            },
+            registerValidate: {
+            	email: [
+                        { required: true, message: '用户名不能为空', trigger: 'blur' }
+                ],
+                phone: [
+                    {validator: phoneValidate, trigger: 'blur' }
+                ],
+                email: [
+                    { required: true, message: '邮箱不能为空', trigger: 'blur' },
+                    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+                ],
+                password: [
+                    {validator: passwordValidate, message: '密码不能为空',trigger: 'blur'}
+                ],
+                repeatPassword: [
+                    {validator: passwordCheckValidate,message: '密码不能为空', trigger: 'blur'}
+                ],
+                validateCode:[
+          					{ required: true, message: '验证码不能为空', trigger: 'blur' }
+                ]
+            },
+            registerAdminValidate: {
+                phone: [
+                    {validator: phoneValidate, trigger: 'blur' }
+                ],
+                email: [
+                    { required: true, message: '邮箱不能为空', trigger: 'blur' },
+                    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+                ],
+                password: [
+                    {validator: passwordValidate,message: '密码不能为空', trigger: 'blur'}
+                ],
+                validateCode:[
+					{ required: true, message: '验证码不能为空', trigger: 'blur' }
+                ]
+            },
+            resetForm: {
+                username: ''
+            },
+            resetValidate: {
+                username: [
+                    {required: true, message: '不能为空', trigger: 'blur'}
+                ]
+            }
+        },
+        methods: {
+        	verificationClick: function() {
+                this.src = this.src + "&nihao=" + Math.random();
+            },
+            handleSubmit: function(name) {
+                var self = this;
+                this.$refs[name].validate(function(valid) {
+                    if (valid) {
+                        if(name === 'loginForm'){
+                        		var usernameEncoded = SmartParaEncrytor.encode(self.loginForm.username);
+                        		var passwordEncoded = SmartParaEncrytor.passwordEncode(self.loginForm.password);
+
+                            self.$post('login.do', {
+                                username: usernameEncoded,
+                                password: passwordEncoded,
+                                redirectUrl:'ajax',
+                                code: self.loginForm.validate_code
+                            }, function () {
+                                if(self.loginForm.remember_checkbox){
+                                    localStorage.setItem('smart_username', self.loginForm.username);
+                                    localStorage.setItem('smart_password', self.loginForm.password);
+                                    localStorage.setItem('smart_remember_me', true);
+                                }else {
+                                    localStorage.setItem('smart_username','');
+                                    localStorage.setItem('smart_password','');
+                                    localStorage.setItem('smart_remember_me', false);
+                                }
+
+                                var serviceUrl = "";//RequestUrlUtils.getParameter('service');
+                                if(!serviceUrl){
+                                    window.location.href= 'dashboard.do';
+                                }
+                                else{
+                                    window.location.href=serviceUrl;
+                                }
+                            }, function (json) {
+                                self.$message.error(json.tooltip);
+                            });
+                        }else if(name === 'registerForm'){
+                            if(!self.registerForm.agreeCheckBox){
+                                self.$message.error('请阅读服务条款并同意后才能注册!');
+                            }else {
+                            	var _data = JSON.parse(JSON.stringify(self.registerForm));
+                            	_data.password=SmartParaEncrytor.encode(_data.password);
+                            	_data.repeatPassword = SmartParaEncrytor.encode(_data.repeatPassword);
+                                self.$post('register.do',_data, function () {
+                                	self.$message.error('注册成功');
+                                    setTimeout(window.location.reload(),1000);
+                                }, function (json) {
+                                    self.$message.error(json.tooltip);
+                                });
+                            }
+                        }else if(name === 'resetForm'){
+                            self.$post('user/reset.do', self.resetForm, function(){
+                                self.$message.success('重置申请已发送!');
+                            }, function (json) {
+                                self.$message.error(json.tooltip);
+                            });
+                        }else if(name==='registerAdminForm'){
+                        	var _data = JSON.parse(JSON.stringify(self.registerAdminForm));
+                        	_data.password=SmartParaEncrytor.encode(_data.password);
+                        	self.$post('user/createAdminAccount.do', _data, function(){
+                                self.$message.success('默认管理员[admin]账户已创建!');
+                                setTimeout(window.location.reload(),1000);
+                            }, function (json) {
+                                self.$message.error(json.tooltip);
+                            });
+                        }
+                    } else {
+                        self.$message.error('信息填写有误，请检查后再提交!');
+                    }
+                })
+            },
+            toWaitSeconds: function () {
+                var self = this;
+                var waitSeconds = 60;
+                if(!self.loginForm.username){
+                    self.$message.error('请先输入用户名!');
+                    return;
+                }
+                self.$post('sendLoginCode.do',{
+                    username: self.loginForm.username
+                },function () {
+                    self.loginForm.code_btn.disabled = true;
+                    self.loginForm.code_btn.str = waitSeconds + '秒后重试';
+                    var timer = setInterval(function () {
+                        waitSeconds--;
+                        self.loginForm.code_btn.str = waitSeconds + '秒后重试';
+                        if(waitSeconds < 1){
+                            self.loginForm.code_btn.disabled = false;
+                            self.loginForm.code_btn.str = '发送验证码';
+                            clearInterval(timer);
+                        }
+                    }, 1000);
+                }, function (json) {
+                    self.$message.error(json.tooltip);
+                });
+            },
+            sendUserRegisgerCode:function(){
+            	var self = this;
+            	if(!self.registerForm.email){
+            		self.$message.error('请使完整的邮箱地址接受验证码');
+            		return;
+            	}
+            	self.$post('sendCode.do', {recvAddress:self.registerForm.email}, function(){
+                    self.$message.success('验证码已发送至'+self.registerForm.email+'注意查收!');
+                }, function (json) {
+                    self.$message.error(json.tooltip);
+                });
+            },
+            sendAdminRegisgerCode:function(){
+            	var self = this;
+            	if(!self.registerAdminForm.email){
+            		self.$message.error('请使完整的邮箱地址接受验证码');
+            		return;
+            	}
+            	self.$post('sendCode.do', {recvAddress:self.registerAdminForm.email}, function(){
+                    self.$message.success('验证码已发送至'+self.registerAdminForm.email+'注意查收!');
+                }, function (json) {
+                    self.$message.error(json.tooltip);
+                });
+            }
+        }
+    })
+</script>
+</html>

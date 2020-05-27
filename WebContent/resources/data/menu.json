@@ -1,0 +1,76 @@
+{
+  "status": "success",
+  "tooltip": "",
+  "data": [
+    {
+      "id": "user-prvilige",
+      "name": "用户与权限",
+      "icon": "fa-address-book",
+      "children": [
+        {
+          "id": "menu-user-management",
+          "name": "员工管理",
+          "icon": "fa-user",
+          "url": "pageView-user-management.do"
+        },
+        {
+          "id": "menu-group-management",
+          "name": "分组管理",
+          "icon": "fa-users",
+          "url": "jsp/employee/employee-management.jsp"
+        },
+        {
+          "id": "menu-menu-management",
+          "name": "菜单管理",
+          "icon": "fa-list-ul",
+          "url": "pageView-menu-management.do"
+        },
+        {
+          "id": "menu-role-management",
+          "name": "角色管理",
+          "icon": "fa-odnoklassniki",
+          "url": "pageView-role-management.do"
+        }
+      ]
+    },
+    {
+      "id": "message",
+      "name": "消息管理",
+      "icon": "fa-comments-o",
+      "children": [
+        {
+          "id": "msg-template",
+          "icon": "fa-pencil",
+          "name": "消息模板",
+          "url": "pageView-msg-template.do"
+        },
+        {
+          "id": "msg-history",
+          "icon": "fa-history",
+          "name": "消息历史",
+          "url": "pageView-msg-history.do"
+        }
+      ]
+    },
+    
+    {
+      "id": "system-setting",
+      "name": "系统管理",
+      "icon": "fa-cogs",
+      "children": [
+        {
+          "id": "para-setting",
+          "icon": "fa-wrench",
+          "name": "参数配置",
+          "url": "pageView-config-settings.do"
+        },
+        {
+          "id": "enum-management",
+          "icon": "fa-edit",
+          "name": "字典管理",
+          "url": "pageView-dict-management.do"
+        }
+      ]
+    }
+  ]
+}
