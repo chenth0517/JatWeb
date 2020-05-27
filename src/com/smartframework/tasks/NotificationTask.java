@@ -25,7 +25,7 @@ public class NotificationTask extends SmartQuartzTask
 	public NotificationTask()
 	{
 		super();
-		this.setGroup("JetWeb");
+		this.setGroup("JatWeb");
 		this.setName("NotificationTask");
 		this.setNotes("日期提醒服务");
 		/**

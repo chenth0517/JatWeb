@@ -110,7 +110,7 @@
 	<div id="system-management" class="layout" v-cloak>
         <div class="layout-header">
             <div class="layout-header-logo">
-                <a href="dashboard.do"><img src="resources/data/JetWeb.png" style="margin-top:-2px;"></a>
+                <a href="dashboard.do"><img src="resources/data/JatWeb.png" style="margin-top:-2px;"></a>
             </div>
             <div class="layout-header-info">
                     <a href="javascript:void(0)" class="user-info">
