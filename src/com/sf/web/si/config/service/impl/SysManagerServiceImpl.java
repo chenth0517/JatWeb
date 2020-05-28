@@ -13,8 +13,8 @@ import com.smartframework.web.core.util.*;
 import com.smartframework.web.core.Constants;
 
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/02
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 public class SysManagerServiceImpl implements SysManagerService
 {
@@ -47,7 +47,7 @@ public class SysManagerServiceImpl implements SysManagerService
 	/**
 	 * 保存实体对象<br>
 	 * 自行修改保存后的研判条件<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -69,7 +69,7 @@ public class SysManagerServiceImpl implements SysManagerService
 	
 	/**
 	 * 批量保存实体对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -79,7 +79,7 @@ public class SysManagerServiceImpl implements SysManagerService
 	}
 	/**
 	 * 根据ID删除对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -100,7 +100,7 @@ public class SysManagerServiceImpl implements SysManagerService
 	
 	/**
 	 * 根据ID值查询<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -115,7 +115,7 @@ public class SysManagerServiceImpl implements SysManagerService
 	 
 	 /**
 	 * 多字段组合查询<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */

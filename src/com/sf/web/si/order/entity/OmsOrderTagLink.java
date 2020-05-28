@@ -10,8 +10,8 @@ import com.smartframework.core.annotation.SmartComment;
 
 /**
  * oms_order_tag_link
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2017/12/27
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 @Entity
 @Table(name = "oms_order_tag_link")

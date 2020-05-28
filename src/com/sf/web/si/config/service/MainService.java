@@ -23,7 +23,7 @@ public interface MainService {
 	public List<Map<String,Object>> countOrder(Integer respUser);
 	/**
 	 * 统计最近七天关闭工单数<br>
-	 * 添加时间:2018/01/15<br>
+	 * 添加时间:2020/05/25<br>
 	 * @param 
 	 * @return
 	 */

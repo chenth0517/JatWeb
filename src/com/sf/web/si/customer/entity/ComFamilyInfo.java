@@ -11,8 +11,8 @@ import com.smartframework.core.annotation.SmartComment;
 import java.util.*;
 /**
  * com_family_info
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/02
+ * @创建人    chenth
+ * @日期    2020/05/22
  */
 @Entity
 @Table(name = "com_family_info")

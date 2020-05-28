@@ -6,8 +6,8 @@ import com.smartframework.core.dao.OrmDao;
 import com.sf.web.si.customer.entity.ActivityMember;
 
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/05/30
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 public interface ActivityMemberOrmDao extends OrmDao<ActivityMember,  Integer>
 {

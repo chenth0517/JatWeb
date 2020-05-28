@@ -7,8 +7,8 @@ import com.smartframework.core.annotation.SmartComment;
 import java.util.*;
 /**
  * oms_op_history
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/10
+ * @创建人    chenth
+ * @日期    2020/05/20
  */
 @Entity
 @Table(name = "oms_op_history")

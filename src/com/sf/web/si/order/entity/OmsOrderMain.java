@@ -5,8 +5,8 @@ import com.smartframework.core.annotation.SmartComment;
 import java.util.*;
 /**
  * oms_order_main
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/15
+ * @创建人    chenth
+ * @日期    2020/05/25
  */
 @Entity
 @Table(name = "oms_order_main")

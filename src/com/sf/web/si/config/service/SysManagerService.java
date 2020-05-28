@@ -5,14 +5,14 @@ import com.sf.web.si.config.entity.ComTagDef;
 import com.smartframework.core.dao.page.PagingBean;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/02
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 public interface SysManagerService
 {
 	/**
 	 * 保存实体对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -20,7 +20,7 @@ public interface SysManagerService
 	
 	/**
 	 * 批量保存实体对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -28,7 +28,7 @@ public interface SysManagerService
 	
 	/**
 	 * 根据ID删除对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 *@param 
 	 *@return
 	 */
@@ -36,7 +36,7 @@ public interface SysManagerService
 	
 	/**
 	 * 根据ID值查询<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 *@param 
 	 *@return
 	 */
@@ -45,7 +45,7 @@ public interface SysManagerService
 	 
 	 /**
 	 * 多字段组合查询<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 *@param 
 	 *@return
 	 */

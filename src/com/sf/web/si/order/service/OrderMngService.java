@@ -10,14 +10,14 @@ import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.server.file.entity.SysFileInfo;
 
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2017/12/27
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 public interface OrderMngService
 {
 	/**
 	 * 保存实体对象<br>
-	 * 添加时间:2017/12/27<br>
+	 * 添加时间:2020/05/28<br>
 	 * @param 
 	 * @return
 	 */
@@ -25,7 +25,7 @@ public interface OrderMngService
 	
 	/**
 	 * 批量保存实体对象<br>
-	 * 添加时间:2017/12/27<br>
+	 * 添加时间:2020/05/28<br>
 	 * @param 
 	 * @return
 	 */
@@ -33,7 +33,7 @@ public interface OrderMngService
 	
 	/**
 	 * 根据ID删除对象<br>
-	 * 添加时间:2017/12/27<br>
+	 * 添加时间:2020/05/28<br>
 	 *@param 
 	 *@return
 	 */
@@ -41,7 +41,7 @@ public interface OrderMngService
 	
 	/**
 	 * 根据ID值查询<br>
-	 * 添加时间:2017/12/27<br>
+	 * 添加时间:2020/05/28<br>
 	 *@param 
 	 *@return
 	 */
@@ -50,7 +50,7 @@ public interface OrderMngService
 	 
 	 /**
 	 * 多字段组合查询<br>
-	 * 添加时间:2017/12/27<br>
+	 * 添加时间:2020/05/28<br>
 	 *@param 
 	 *@return
 	 */

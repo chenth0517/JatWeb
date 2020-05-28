@@ -15,8 +15,8 @@ import com.sf.web.si.config.entity.ComTagDef;
 import com.smartframework.core.annotation.SmartComment;
 import com.smartframework.core.smart.SmartView;
 /**
- * @desc    SysManagerControl.java SmartWeb Code Plugin Created.
- * @date    2018/01/02
+ * @desc    SysManagerControl.java chenth
+ * @date    2020/05/22
  */
 @SmartComment("ComTagDef实例增删改查接口层")
 public class SysManagerControl extends BasicControl

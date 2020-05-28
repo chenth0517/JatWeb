@@ -6,8 +6,8 @@ import com.smartframework.core.dao.OrmDao;
 import com.sf.web.si.order.entity.OmsOrderMain;
 
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/15
+ * @创建人    chenth
+ * @日期    2020/05/25
  */
 public interface OmsOrderMainOrmDao extends OrmDao<OmsOrderMain,  Integer>
 {

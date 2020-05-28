@@ -7,8 +7,8 @@ import com.smartframework.core.annotation.SmartComment;
 import java.util.*;
 /**
  * activity_member
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/05/30
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 @Entity
 @Table(name = "activity_member")

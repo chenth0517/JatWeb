@@ -24,8 +24,8 @@ import org.apache.xpath.operations.Bool;
 import org.h2.engine.User;
 
 /**
- * @desc    OrderMngControl.java SmartWeb Code Plugin Created.
- * @date    2017/12/27
+ * @desc    OrderMngControl.java chenth
+ * @date    2020/05/28
  */
 @SmartComment("OmsOrderMain实例增删改查接口层")
 public class OrderMngControl extends BasicControl

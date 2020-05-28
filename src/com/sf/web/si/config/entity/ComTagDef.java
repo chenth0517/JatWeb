@@ -7,8 +7,8 @@ import com.smartframework.core.annotation.SmartComment;
 import java.util.*;
 /**
  * com_tag_def
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2017/12/27
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 @Entity
 @Table(name = "com_tag_def")

@@ -18,8 +18,8 @@ import com.smartframework.core.smart.SmartView;
 import com.smartframework.web.system.utility.util.CommonTranslateUtil;
 
 /**
- * @desc    OmsOrderTaskControl.java SmartWeb Code Plugin Created.
- * @date    2018/01/02
+ * @desc    OmsOrderTaskControl.java chenth
+ * @date    2020/05/22
  */
 @SmartComment("OmsOrderTask实例增删改查接口层")
 public class OmsOrderTaskControl extends BasicControl

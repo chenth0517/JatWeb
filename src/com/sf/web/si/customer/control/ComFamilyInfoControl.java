@@ -13,8 +13,8 @@ import com.sf.web.si.customer.entity.ComFamilyInfo;
 import com.smartframework.core.annotation.SmartComment;
 import com.smartframework.core.smart.SmartView;
 /**
- * @desc    ComFamilyInfoControl.java SmartWeb Code Plugin Created.
- * @date    2018/01/02
+ * @desc    ComFamilyInfoControl.java chenth
+ * @date    2020/05/28
  */
 @SmartComment("ComFamilyInfo实例增删改查接口层")
 public class ComFamilyInfoControl extends BasicControl

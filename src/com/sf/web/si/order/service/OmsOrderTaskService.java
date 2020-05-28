@@ -9,14 +9,14 @@ import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.server.file.entity.SysFileInfo;
 
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/02
+ * @创建人    chenth
+ * @日期    2020/05/22
  */
 public interface OmsOrderTaskService
 {
 	/**
 	 * 保存实体对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -25,7 +25,7 @@ public interface OmsOrderTaskService
 	public String  saveOpHistory(OmsOpHistory opHistory);
 	/**
 	 * 批量保存实体对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 * @param 
 	 * @return
 	 */
@@ -33,7 +33,7 @@ public interface OmsOrderTaskService
 	
 	/**
 	 * 根据ID删除对象<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 *@param 
 	 *@return
 	 */
@@ -41,7 +41,7 @@ public interface OmsOrderTaskService
 
 	/**
 	 * 根据ID值查询<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 *@param 
 	 *@return
 	 */
@@ -50,7 +50,7 @@ public interface OmsOrderTaskService
 	 
 	 /**
 	 * 多字段组合查询<br>
-	 * 添加时间:2018/01/02<br>
+	 * 添加时间:2020/05/22<br>
 	 *@param 
 	 *@return
 	 */

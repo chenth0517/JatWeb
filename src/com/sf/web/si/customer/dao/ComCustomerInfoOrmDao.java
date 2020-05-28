@@ -5,8 +5,8 @@ import com.smartframework.core.dao.OrmDao;
 import com.sf.web.si.customer.entity.ComCustomerInfo;
 
 /**
- * @创建人    SmartWeb Code Plugin Created.
- * @日期    2018/01/29
+ * @创建人    chenth
+ * @日期    2020/05/28
  */
 public interface ComCustomerInfoOrmDao extends OrmDao<ComCustomerInfo,  Integer>
 {
