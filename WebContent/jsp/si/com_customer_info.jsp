@@ -20,14 +20,14 @@
 <st:jspId value="com_customer_info"></st:jspId>
 <body>
 <div id="vue_com_customer_info" v-cloak>
-	<sf-panel title="所有客户">
+	<sf-panel title="所有长期劳务人员">
 		<el-row>
 			<div class="com_customer_info-div">
 				<sf-toolbar>
 					<div slot="searcher">
-						<el-input placeholder="客户名称" v-model.trim="customerQueryCondition.name" icon="search" style="width: 120px;"></el-input>
-						<el-input placeholder="客户手机号" v-model.trim="customerQueryCondition.phone" icon="search" style="width: 150px;"></el-input>
-<!-- 						<el-input placeholder="客户邮箱" v-model.trim="customerQueryCondition.email" icon="search" style="width: 190px;"></el-input> -->
+						<el-input placeholder="姓名" v-model.trim="customerQueryCondition.name" icon="search" style="width: 120px;"></el-input>
+						<el-input placeholder="手机号" v-model.trim="customerQueryCondition.phone" icon="search" style="width: 150px;"></el-input>
+<!-- 						<el-input placeholder="邮箱" v-model.trim="customerQueryCondition.email" icon="search" style="width: 190px;"></el-input> -->
 						<el-input placeholder="年龄大于" v-model.trim="customerQueryCondition.agegt" icon="search" style="width: 105px;"></el-input>
 						<el-input placeholder="年龄小于" v-model.trim="customerQueryCondition.agelt" icon="search" style="width: 105px;"></el-input>
 						<el-button type="primary" icon="fa-recycle" @click="reset">重置</el-button>
@@ -48,8 +48,8 @@
 						  :query-condition="customerQueryCondition">
 						<el-table-column type="selection" width="80" align="center"></el-table-column>
 						<!-- el-table-column fixed label="#" prop="__index" width="85" align="center"></el-table-column--!>
-						<!-- el-table-column fixed width="85" label="客户ID" prop="id"></el-table-column -->
-						<el-table-column fixed width="95" label="客户名称" prop="name"></el-table-column>
+						<!-- el-table-column fixed width="85" label="人员编号" prop="id"></el-table-column -->
+						<el-table-column fixed width="95" label="姓名" prop="name"></el-table-column>
 						<el-table-column width="65" label="性别" prop="gender_t_description"></el-table-column>
 						<el-table-column width="120" label="生日" prop="birthday" :formatter="dateFormat"></el-table-column>
 						<el-table-column width="140" label="手机号" prop="phone"></el-table-column>
@@ -62,19 +62,19 @@
 <!-- 						<el-table-column label="责任项目组" prop="teamName"></el-table-column> -->
 <!-- 						<el-table-column label="负责人" prop="realName"></el-table-column> -->
 						<el-table-column width="150" label="备注" prop="comment"></el-table-column>
-						<el-table-column width="95" label="客服" prop="serviceManager_t_description"></el-table-column>
+<!--						<el-table-column width="95" label="客服" prop="serviceManager_t_description"></el-table-column>
 						<el-table-column width="95" label="顾问" prop="adviseManager_t_description"></el-table-column>
 						<el-table-column width="95" label="文案" prop="technicalManager_t_description"></el-table-column>
 						<el-table-column width="120" label="最近拜访" prop="lastVisitDate" :formatter="dateFormat"></el-table-column>
-<!-- 						<el-table-column width="180" label="职业" prop="job_t_description"></el-table-column> -->
-						<el-table-column width="100" label="兴趣爱好" prop="interest_t_description"></el-table-column>
+ 						<el-table-column width="180" label="职业" prop="job_t_description"></el-table-column>
+						<el-table-column width="100" label="兴趣爱好" prop="interest_t_description"></el-table-column> -->
 						<el-table-column width="150" label="家庭住址" prop="homeAddr"></el-table-column>
 						<el-table-column width="150" label="邮寄地址" prop="officeAddr"></el-table-column>
 						<el-table-column width="120" label="登记时间" prop="registerDate" :formatter="dateFormat"></el-table-column>
-						<el-table-column width="120" label="纪念日" prop="specialDay" :formatter="dateFormat"></el-table-column>
-<!-- 						<el-table-column width="150" label="拜访笔记" prop="visitNote"></el-table-column> -->
-<!-- 						<el-table-column width="190" label="邮箱" prop="email"></el-table-column> -->
-<!-- 						<el-table-column width="150" label="其他号码" prop="tel"></el-table-column> -->
+<!--						<el-table-column width="120" label="纪念日" prop="specialDay" :formatter="dateFormat"></el-table-column>
+ 						<el-table-column width="150" label="拜访笔记" prop="visitNote"></el-table-column>
+ 						<el-table-column width="190" label="邮箱" prop="email"></el-table-column>
+ 						<el-table-column width="150" label="其他号码" prop="tel"></el-table-column> -->
 						<el-table-column width="140" fixed="right" label="操作">
 							<template scope="scope">
 								<el-tooltip class="item" effect="light" content="今日拜访" placement="bottom">
@@ -95,7 +95,7 @@
 	</sf-panel>
 	
 	<sf-form-dialog ref="comCustomerInfoModal"
-					title="客户信息"
+					title="长期劳务人员信息"
 					v-model="showComCustomerInfoModal"
 					:mode="comCustomerInfoEditMode"
 					url="si/customer/comCustomerInfo/save.do" 
@@ -104,8 +104,8 @@
 					@on-success="onComCustomerInfoModalSuccess">
 		<el-row :gutter="10">
 			<el-col :span="12">
-				<el-form-item label="客户名称" prop="name">
-					<el-input v-model.trim="comCustomerInfoForm.name" placeholder="客户名称" ></el-input>
+				<el-form-item label="人员姓名" prop="name">
+					<el-input v-model.trim="comCustomerInfoForm.name" placeholder="人员姓名" ></el-input>
 				</el-form-item>
 			</el-col>
 			<el-col :span="12">
@@ -318,9 +318,9 @@
 		<el-form-item label="兴趣爱好" prop="interest">
             <sf-select width="100%" label="" v-model.trim="comFamilyInfoForm.interest" placeholder="兴趣爱好" url="utility/dictionary/loadDictItemsByName.do?name=SMART_INFO_DIC_INTERESTS" value-field="id" text-field="displayValue" :multiple="true"></sf-select>
         </el-form-item>
-		<el-form-item label="关联客户" prop="customerId">
+		<el-form-item label="关联人员" prop="customerId">
             <sf-select width="100%" label="" v-model="comFamilyInfoForm.customerId"
-				   placeholder="关联客户" url="si/customer/comCustomerInfo/list.do" 
+				   placeholder="关联人员" url="si/customer/comCustomerInfo/list.do" 
 				   value-field="id" text-field="name">
 			</sf-select>
         </el-form-item>
@@ -342,18 +342,18 @@
 				email: '',
 				agegt: '',
 				agelt: '',
-				fastFilter: 0	//快速过滤：只显示当前客服相关客户
+				fastFilter: 0	//快速过滤：只显示当前客服相关长期劳务人员
 			},
 			fastFilterText: "全部",
 			currentRow: null,
 			selection: [],
 			comCustomerInfoTableColumns: [
 				{
-					title: '客户ID',
+					title: '人员ID',
 					key: 'id'
 				},
 				{
-					title: '客户名称',
+					title: '人员姓名',
 					key: 'name'
 				},
 				{
@@ -466,10 +466,10 @@
 			},
 			comCustomerInfoValidate: {
 				//此处添加字段数据合理性验证
-				name: [{required: true, message: '客户名称不能为空', trigger: 'blur'}],
+				name: [{required: true, message: '姓名不能为空', trigger: 'blur'}],
 				registerDate: [{required: true, message: '登记时间不能为空', trigger: 'blur'}],
-				gender: [{required: true, type: 'number', message: '客户性别不能为空', trigger: 'blur'}],
-				phone: [{required: true, message: '客户手机号不能为空', trigger: 'blur'}],
+				gender: [{required: true, type: 'number', message: '性别不能为空', trigger: 'blur'}],
+				phone: [{required: true, message: '手机号不能为空', trigger: 'blur'}],
 				email: [{type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur'}]
 			},
 			
@@ -513,7 +513,7 @@
 					key: 'interest'
 				},
 				{
-					title: '客户编号',
+					title: '人员编号',
 					key: 'customerId'
 				}
 			],
@@ -632,7 +632,7 @@
 			},
 			deleteComCustomerInfo: function () {
 				var self = this;
-				this.$confirm("确定删除所选客户及其相关成员?",'提示',{
+				this.$confirm("确定删除所选人员及其相关成员?",'提示',{
 					type: 'warning',
 					callback: function(action){
 						if(action === 'confirm'){

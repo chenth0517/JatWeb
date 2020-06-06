@@ -4,7 +4,7 @@
 <head>
     <%@include file="../include/common-rss.jsp"%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>工单维护页面</title>
+    <title>任务维护页面</title>
     <style>
 		.inline-toolbar div{
         	display:inline-block;
@@ -33,17 +33,17 @@
 %>
 <body>
 <div id="vue_oms_order_main">
-    <sf-panel title="工单管理" v-cloak>
+    <sf-panel title="任务管理" v-cloak>
         <el-row>
 			<el-col :span="4">
 				<div class="layout-content-sidebar" style="padding-right: 10px;">
 					<el-menu :default-active="defaultActive" @select="onNavMenuClick" style="height:612px;background-color: #fff;border:1px solid #eef1f6">
-<!--                         <el-menu-item index="1" >所有工单</el-menu-item> -->
-						<el-menu-item index="2" v-if="!isHidden" >我建立的工单</el-menu-item>
-						<el-menu-item index="3">我的未解决工单</el-menu-item>
-						<el-menu-item index="4">我的解决中工单</el-menu-item>
-						<el-menu-item index="5">我的已解决工单</el-menu-item>
-						<el-menu-item index="6">我的已关闭工单</el-menu-item>
+<!--                         <el-menu-item index="1" >所有任务</el-menu-item> -->
+						<el-menu-item index="2" v-if="!isHidden" >我建立的任务</el-menu-item>
+						<el-menu-item index="3">我的未解决任务</el-menu-item>
+						<el-menu-item index="4">我的解决中任务</el-menu-item>
+						<el-menu-item index="5">我的已解决任务</el-menu-item>
+						<el-menu-item index="6">我的已关闭任务</el-menu-item>
 					</el-menu>
 				</div>
 			</el-col>
@@ -52,7 +52,7 @@
 				<div class="oms_order_main-div">
 					<sf-toolbar>
 						<div slot="searcher">
-							<el-input placeholder="工单主题" v-model.trim="queryCondition.topic" icon="search" style="width: 200px;"></el-input>
+							<el-input placeholder="任务主题" v-model.trim="queryCondition.topic" icon="search" style="width: 200px;"></el-input>
 							<el-input placeholder="客户姓名" v-model.trim="queryCondition.customerName" icon="search" style="width:200px;"></el-input>
 							<el-select placeholder="优先级" v-model="queryCondition.priority" icon="search" style="width:200px;">
 								<el-option label="所有" value=null></el-option>
@@ -79,7 +79,7 @@
 							  :default-sort = "{prop: 'id', order: 'ascending'}">
 						<el-table-column type="selection" width="50" align="center"></el-table-column>
 						<%--<el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>--%>
-						<el-table-column label="工单编号" prop="id" width="100"></el-table-column>
+						<el-table-column label="任务编号" prop="id" width="100"></el-table-column>
 						<el-table-column label="主题" prop="topic"></el-table-column>
 						<%--<el-table-column label="受理内容" prop="content"></el-table-column>--%>
 						<el-table-column label="客户" prop="name"></el-table-column>
@@ -104,7 +104,7 @@
         </el-row>
     </sf-panel>
     <sf-form-dialog ref="omsOrderMainModal"
-                    title="工单"
+                    title="任务"
                     v-model="showOmsOrderMainModal"
                     :edit-mode="omsOrderMainEditMode"
                     url="si/order/orderMng/save.do"
@@ -113,8 +113,8 @@
                     @on-success="onOmsOrderMainModalSuccess">
 
 					<el-row>
-						<el-form-item label="工单ID" prop="id" style="display: none;">
-							<el-input v-model.trim="omsOrderMainForm.id" placeholder="工单ID" ></el-input>
+						<el-form-item label="任务ID" prop="id" style="display: none;">
+							<el-input v-model.trim="omsOrderMainForm.id" placeholder="任务ID" ></el-input>
 						</el-form-item>
 					</el-row>
 					<el-row :gutter="10">
@@ -179,7 +179,7 @@
 					<el-row>
 						<el-col :span="12">
 							<el-form-item label="模板" prop="instanceId">
-								<%-- <el-input v-model.trim="omsOrderMainForm.instanceId" placeholder="模板工单的流程实例ID" ></el-input>--%>
+								<%-- <el-input v-model.trim="omsOrderMainForm.instanceId" placeholder="模板任务的流程实例ID" ></el-input>--%>
 								<el-select v-model.trim = "omsOrderMainForm.instanceId" placeholder="模板" style="width:100%;">
 									<el-option label="默认" value="-1"></el-option>
 								</el-select>
@@ -214,7 +214,7 @@
 			selection:[],
             omsOrderMainTableColumns: [
                 {
-                    title: '工单ID',
+                    title: '任务ID',
                     key: 'id'
                 },
                 {
@@ -246,7 +246,7 @@
                     key: 'createTime'
                 },
                 {
-                    title: '模板工单的流程实例ID',
+                    title: '模板任务的流程实例ID',
                     key: 'instanceId'
                 }
             ],
@@ -269,7 +269,7 @@
             },
             omsOrderMainValidate: {
             	//此处添加字段数据合理性验证
-                //id: [{required: true, message: '工单ID不能为空', trigger: 'blur'}],
+                //id: [{required: true, message: '任务ID不能为空', trigger: 'blur'}],
 				topic:[{required:true, message:'主题不能为空',trigger:'blur'}],
                 customerName:[{required:true,message:'客户不能为空',trigger:'blur'}],
 				status:[{required:true,message:'状态不能为空',trigger:'change'}],
@@ -389,9 +389,9 @@
                 this.myFileList=[];
 
 				this.$refs['uploadEditor'].clearFiles();
-                //初始化工单附件列表
+                //初始化任务附件列表
 				this.omsOrderMainFiles();
-				//初始化工单标签列表
+				//初始化任务标签列表
 				this.omsOrderMainTags();
             },
             onOmsOrderMainModalSuccess: function () {
@@ -399,11 +399,11 @@
             },
             deleteOmsOrderMain: function () {
                 if(this.selection.length === 0){
-                    return this.$message.warning('请至少选择一个工单！');
+                    return this.$message.warning('请至少选择一个任务！');
                 }
                 //同时删除附件及其关联，及富文本中的上传图片
                 var self = this;
-                this.$confirm('确定删除所选工单？','提示',{
+                this.$confirm('确定删除所选任务？','提示',{
                     type: 'warning',
                     callback: function(action){
                         if(action === 'confirm'){
@@ -574,7 +574,7 @@
                         }
                     });
 			},
-			//工单处理
+			//任务处理
             deployOmsOrderMain:function () {
                 window.parent.systemManagement.activeTab = this.currentRow.id+"";
 				var menu={};

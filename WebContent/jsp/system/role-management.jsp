@@ -19,7 +19,7 @@
 </head>
 <body>
 <div id="role-management">
-    <sf-panel title="角色管理" v-cloak>
+    <sf-panel title="岗位角色" v-cloak>
         <el-row style="min-width: 1200px;">
             <div class="role-div">
                 <sf-toolbar>

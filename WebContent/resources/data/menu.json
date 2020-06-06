@@ -27,7 +27,7 @@
         },
         {
           "id": "menu-role-management",
-          "name": "角色管理",
+          "name": "岗位角色",
           "icon": "fa-odnoklassniki",
           "url": "pageView-role-management.do"
         }

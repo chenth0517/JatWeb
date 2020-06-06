@@ -14,7 +14,7 @@
 <st:jspId value="com_family_info"></st:jspId>
 <body>
 <div id="vue_com_family_info">
-    <sf-panel title="所有成员" v-cloak>
+    <sf-panel title="所有短期劳务人员" v-cloak>
         <el-row>
             <div class="com_family_info-div">
                 <sf-toolbar>
@@ -52,7 +52,7 @@
         </el-row>
     </sf-panel>
     <sf-form-dialog ref="comFamilyInfoModal"
-                    title="成员"
+                    title="短期劳务人员"
                     v-model="showComFamilyInfoModal"
                     :mode="comFamilyInfoEditMode"
                     url="si/customer/comFamilyInfo/save.do" 
@@ -63,7 +63,7 @@
 			            <el-input v-model.trim="comFamilyInfoForm.name" placeholder="姓名" ></el-input>
 			        </el-form-item>
 					<el-form-item label="关系" prop="membership">
-						<sf-select width="100%" label="" v-model.trim="comFamilyInfoForm.membership" placeholder="成员关系" url="utility/dictionary/loadDictItemsByName.do?name=SMART_INFO_DIC_RELATIONSHIP" value-field="id" text-field="displayValue"></sf-select>
+						<sf-select width="100%" label="" v-model.trim="comFamilyInfoForm.membership" placeholder="人员关系" url="utility/dictionary/loadDictItemsByName.do?name=SMART_INFO_DIC_RELATIONSHIP" value-field="id" text-field="displayValue"></sf-select>
 			        </el-form-item>
 					<el-form-item label="联系电话" prop="phone">
 			            <el-input v-model.trim="comFamilyInfoForm.phone" placeholder="联系电话" ></el-input>
@@ -101,11 +101,11 @@
             selection: [],
             comFamilyInfoTableColumns: [
                 {
-                    title: '成员编号',
+                    title: '人员编号',
                     key: 'id'
                 },
                 {
-                    title: '成员关系（1-户主，2-夫妻，3-子女，4-兄妹，5-父母）',
+                    title: '人员关系（1-户主，2-夫妻，3-子女，4-兄妹，5-父母）',
                     key: 'membership'
                 },
                 {
@@ -152,7 +152,7 @@
             },
             comFamilyInfoValidate: {
             	//此处添加字段数据合理性验证
-                //id: [{required: true, message: '成员编号不能为空', trigger: 'blur'}],
+                //id: [{required: true, message: '人员编号不能为空', trigger: 'blur'}],
             },
             buttonLoading: false,
         },
@@ -207,7 +207,7 @@
             },
             deleteComFamilyInfo: function () {
                 var self = this;
-                this.$confirm("确定删除所选成员?",'提示',{
+                this.$confirm("确定删除所选人员?",'提示',{
                     type: 'warning',
                     callback: function(action){
                         if(action === 'confirm'){
