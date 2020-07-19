@@ -76,8 +76,8 @@ public class ComCustomerInfoServiceImpl implements ComCustomerInfoService
 	{
 		try
 		{
-			String newNote = comCustomerInfo.getVisitNoteNew().trim();
-			if (newNote.length()>0)
+			String newNote = comCustomerInfo.getVisitNoteNew();
+			if (newNote!=null && newNote.trim().length()>0)
 			{
 				newNote = DateUtil.format(new Date()) + "\n" + newNote + "\n";
 				comCustomerInfo.setVisitNote(newNote+comCustomerInfo.getVisitNote());

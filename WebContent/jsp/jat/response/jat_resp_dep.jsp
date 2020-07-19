@@ -42,11 +42,11 @@
                     	<el-table-column label="职责编号" prop="id"></el-table-column>
                     	<el-table-column label="职责名称" prop="name"></el-table-column>
                     	<el-table-column label="职责描述" prop="description"></el-table-column>
-                    	<el-table-column label="停用该职责" prop="disabled"></el-table-column>
-                    	<el-table-column label="责任类型" prop="type"></el-table-column>
-                    	<el-table-column label="是否关键责任" prop="isKey"></el-table-column>
-                    	<el-table-column label="是否独立责任" prop="singleResp"></el-table-column>
-                    	<el-table-column label="是否安全责任" prop="isSafeResp"></el-table-column>
+                    	<el-table-column label="停用该职责" prop="disabled_t_description"></el-table-column>
+                    	<el-table-column label="责任类型" prop="type_t_description"></el-table-column>
+                    	<el-table-column label="是否关键责任" prop="isKey_t_description"></el-table-column>
+                    	<el-table-column label="是否独立责任" prop="singleResp_t_description"></el-table-column>
+                    	<el-table-column label="是否安全责任" prop="isSafeResp_t_description"></el-table-column>
                     
                 </sf-table>
             </div>
@@ -71,29 +71,19 @@
 			            <el-input v-model.trim="jatRespDepForm.description" placeholder="职责描述" ></el-input>
 			        </el-form-item>
 					<el-form-item label="停用该职责" prop="disabled">
-			            <el-select v-model.trim="jatRespDepForm.disabled" placeholder="停用该职责" >
-			            	<el-option v-for="item in OptionDisabled" :key="item.value" :label="item.label" :value="item.value"></el-option>
-			            </el-select>
+			            <sf-select v-model.trim="jatRespDepForm.disabled" placeholder="停用该职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_DISABLED" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<el-form-item label="责任类型" prop="type">
-			            <el-select v-model.trim="jatRespDepForm.type" placeholder="责任类型" >
-			            	<el-option v-for="item in OptionRespType" :key="item.value" :label="item.label" :value="item.value"></el-option>
-			            </el-select>
+			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="责任类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<el-form-item label="是否关键责任" prop="is_key">
-			            <el-select v-model.trim="jatRespDepForm.isKey" placeholder="是否关键责任" >
-			            	<el-option v-for="item in OptionYesNo" :key="item.value" :label="item.label" :value="item.value"></el-option>
-			            </el-select>
+			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="是否关键责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<el-form-item label="是否独立责任" prop="single_resp">
-			            <el-select v-model.trim="jatRespDepForm.singleResp" placeholder="是否独立责任" >
-			            	<el-option v-for="item in OptionYesNo" :key="item.value" :label="item.label" :value="item.value"></el-option>
-			            </el-select>
+			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="是否独立责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<el-form-item label="是否安全责任" prop="is_safe_resp">
-			            <el-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="是否安全责任">
-			            	<el-option v-for="item in OptionYesNo" :key="item.value" :label="item.label" :value="item.value"></el-option>
-			            </el-select>
+			            <sf-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="是否安全责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
     </sf-form-dialog>
 </div>
@@ -106,32 +96,7 @@
             queryCondition: {
                 name: ''
             },
-            disabledArray:[
-            	{id:0,text:'未禁用'},
-            	{id:1,text:'已禁用'}
-            ],
             currentRow: null,
-            OptionDisabled: [{
-				value: 1,
-				label: '停用'
-			}, {
-				value: 0,
-				label: '启用'
-			}],
-			OptionRespType: [{
-				value: 1,
-				label: '部门责任'
-			}, {
-				value: 2,
-				label: '岗位责任'
-			}],
-			OptionYesNo: [{
-				value: 1,
-				label: '是'
-			}, {
-				value: 0,
-				label: '否'
-			}],
 			jatRespDepSelection:[],
             jatRespDepTableColumns: [
                 {

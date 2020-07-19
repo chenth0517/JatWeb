@@ -1,15 +1,21 @@
 package com.sf.web.jat.response.service.impl;
 
 import java.util.*;
+
 import com.sf.web.jat.response.entity.JatRespDep;
 import com.sf.web.jat.response.dao.JatRespDepOrmDao;
 import com.sf.web.jat.response.service.JatRespDepService;
+
 import org.apache.log4j.Logger;
+
 import com.smartframework.core.dao.JdbcDao;
 import com.smartframework.core.dao.page.PagingBean;
 import com.smartframework.core.i18n.I18n;
+import com.smartframework.web.core.database.ColumnRefInfo;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.core.util.*;
+import com.smartframework.web.system.utility.util.CommonTranslateUtil;
+import com.smartframework.web.system.utility.util.CommonTranslateUtil.DictItemColumRefType;
 import com.smartframework.web.core.Constants;
 /**
  * @创建人    SmartWeb Code Plugin Created.
@@ -166,6 +172,23 @@ public class JatRespDepServiceImpl implements JatRespDepService
 	 public PagingBean	queryRecords(QueryFilter queryFilter)
 	 {
 		String sql = "select e.* from jat_resp_dep e";
-		return jdbcDao.queryForPaging(sql+queryFilter.getWhereSql(),queryFilter.getConditionValues(), queryFilter.getPageSize(), queryFilter.getPageIndex());
+		PagingBean pb = jdbcDao.queryForPaging(sql+queryFilter.getWhereSql(),queryFilter.getConditionValues(), queryFilter.getPageSize(), queryFilter.getPageIndex());
+	 
+		List<Map<String,Object>> records = pb.getData();
+		Map<String,String> dictNameFieldNameMap = new HashMap<String,String>();
+		//dictNameFieldNameMap.put("gender", "SMART_INFO_DIC_GENDER");
+		dictNameFieldNameMap.put("type", "JAT_RESP_TYPE");
+		dictNameFieldNameMap.put("disabled", "JAT_DISABLED");
+		dictNameFieldNameMap.put("isKey", "JAT_YES_OR_NO");
+		dictNameFieldNameMap.put("singleResp", "JAT_YES_OR_NO");
+		dictNameFieldNameMap.put("isSafeResp", "JAT_YES_OR_NO");
+		CommonTranslateUtil.translateMultiDictColumn(records, dictNameFieldNameMap, DictItemColumRefType.ID_COLUMN);
+		
+//		Map<String, ColumnRefInfo> filedRefInfoMap = new HashMap<String,ColumnRefInfo>();
+//		filedRefInfoMap.put("serviceManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
+//		filedRefInfoMap.put("technicalManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
+//		filedRefInfoMap.put("adviseManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
+//		CommonTranslateUtil.translateMultiReferenceColumn(records, null, DictItemColumRefType.ID_COLUMN, filedRefInfoMap);
+		return pb;
 	 }
 }
