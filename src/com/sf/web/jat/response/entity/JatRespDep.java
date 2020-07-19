@@ -57,6 +57,10 @@ public class JatRespDep  implements Serializable
 	@SmartFieldAnnotation(description="is_safe_resp",checkValueRange=false ,minValue=0,maxValue = 0)
     private Integer isSafeResp;
     
+	@Column(name = "pid" ,length = 10)  
+	@SmartFieldAnnotation(description="pid",checkValueRange=false ,minValue=0,maxValue = 0)
+    private Integer pid;
+    
     
 
     public void setId(Integer id)
@@ -146,5 +150,13 @@ public class JatRespDep  implements Serializable
         return this.isSafeResp ;
     }
 
+    
+	public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
     
 }

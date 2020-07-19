@@ -5,6 +5,8 @@ import java.util.*;
 import com.sf.web.jat.response.entity.JatRespDep;
 import com.sf.web.jat.response.dao.JatRespDepOrmDao;
 import com.sf.web.jat.response.service.JatRespDepService;
+import com.sf.web.si.customer.entity.ComCustomerInfo;
+import com.sf.web.si.customer.entity.ComFamilyInfo;
 
 import org.apache.log4j.Logger;
 
@@ -125,19 +127,11 @@ public class JatRespDepServiceImpl implements JatRespDepService
 		try
 		{
 			List<JatRespDep> list = this.jatRespDepOrmDao.findAll(idList);
-			if(permanently)
-			{
-				this.jatRespDepOrmDao.delete(list);
+			for (JatRespDep jatRespDep:list) {
+				List<JatRespDep> memList = this.jatRespDepOrmDao.findById(jatRespDep.getId());
+				this.jatRespDepOrmDao.delete(memList);
 			}
-			else
-			{
-				for(JatRespDep item:list)
-				{
-					//如果有disabled字段请放开下面注释语句，如果逻辑删除为其他字段请坐相应修改
-					//item.setDisabled(1);//假删除
-				}
-				this.jatRespDepOrmDao.save(list);
-			}
+			this.jatRespDepOrmDao.delete(list);
 		}
 		catch(Exception e)
 		{
@@ -184,11 +178,11 @@ public class JatRespDepServiceImpl implements JatRespDepService
 		dictNameFieldNameMap.put("isSafeResp", "JAT_YES_OR_NO");
 		CommonTranslateUtil.translateMultiDictColumn(records, dictNameFieldNameMap, DictItemColumRefType.ID_COLUMN);
 		
-//		Map<String, ColumnRefInfo> filedRefInfoMap = new HashMap<String,ColumnRefInfo>();
-//		filedRefInfoMap.put("serviceManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
+		Map<String, ColumnRefInfo> filedRefInfoMap = new HashMap<String,ColumnRefInfo>();
+		filedRefInfoMap.put("pid", new ColumnRefInfo("jat_resp_dep", "id", "name", ""));
 //		filedRefInfoMap.put("technicalManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
 //		filedRefInfoMap.put("adviseManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
-//		CommonTranslateUtil.translateMultiReferenceColumn(records, null, DictItemColumRefType.ID_COLUMN, filedRefInfoMap);
+		CommonTranslateUtil.translateMultiReferenceColumn(records, null, DictItemColumRefType.ID_COLUMN, filedRefInfoMap);
 		return pb;
 	 }
 }

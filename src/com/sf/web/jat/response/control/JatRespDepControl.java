@@ -66,13 +66,17 @@ public class JatRespDepControl extends BasicControl
 	
 	//method标识是否执行导出,并根据pageSize<0确定是否全部导出
 	@SmartComment("获取JatRespDep实例的分页查询结果")
-	public SmartView list(String name,Integer pageSize,Integer pageIndex,String sortField,String sortOrder,String columns,String method)
+	public SmartView list(String name,Integer pid,Integer pageSize,Integer pageIndex,String sortField,String sortOrder,String columns,String method)
 	{
 		QueryFilter queryFilter = new QueryFilter();
 		//在这里根据输入的查询参数构建QueryFilter实例并执行 Service中默认SQL对象的别名是 e
 		if(!ParameterUtils.isEmptyOrNull(name))
 		{
 			queryFilter.addStringFieldLikeCondition("e.name", name);
+		}
+		if(!ParameterUtils.isEmptyOrNull(pid))
+		{
+			queryFilter.addNumberFieldEqualCondition("e.pid", pid);
 		}
 		if(pageSize==null||pageIndex==null)
 		{

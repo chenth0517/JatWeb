@@ -10,6 +10,8 @@ import com.sf.web.jat.response.entity.JatRespDep;
  */
 public interface JatRespDepOrmDao extends OrmDao<JatRespDep,  Integer>
 {
+	public List<JatRespDep> findById(Integer id);
+	
 	public List<JatRespDep> findByName(String name);
 	
 	public List<JatRespDep> findByDescription(String description);

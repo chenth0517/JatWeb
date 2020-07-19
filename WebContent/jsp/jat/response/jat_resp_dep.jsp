@@ -4,7 +4,7 @@
 <head>
     <%@include file="../../include/common-rss.jsp"%>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>jat_resp_dep-维护页面</title>
+    <title>职责定义-维护页面</title>
     <style>
 		.inline-toolbar div{
         	display:inline-block;
@@ -15,7 +15,7 @@
 <!-- For table:jat_resp_dep CRUD Operation -->
 <body>
 <div id="vue_jat_resp_dep">
-    <sf-panel title="jat_resp_dep管理" v-cloak>
+    <sf-panel title="职责管理" v-cloak>
         <el-row>
             <div class="jat_resp_dep-div">
                 <sf-toolbar>
@@ -25,7 +25,7 @@
                     </div>
                     <el-button type="success" icon="plus" @click="addJatRespDep">添加</el-button>
                     <el-button type="info" icon="edit" @click="editJatRespDep" :disabled="!currentRow">编辑</el-button>
-                    <!-- el-button type="danger" icon="delete" @click="deleteJatRespDep" :disabled="JatRespDepSelection.length<1">删除</el-button -->
+                    <el-button type="danger" icon="delete" @click="deleteJatRespDep" :disabled="jatRespDepSelection.length==0">删除</el-button>
                 </sf-toolbar>
                 <sf-table ref="jatRespDepTable"
                           highlight-current-row
@@ -39,21 +39,36 @@
                           @selection-change="onJatRespDepSelectionChange">
                         <el-table-column type="selection" width="50" align="center"></el-table-column>
                     	<el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>
-                    	<el-table-column label="职责编号" prop="id"></el-table-column>
+                    	<!-- el-table-column label="职责编号" prop="id"></el-table-column -->
                     	<el-table-column label="职责名称" prop="name"></el-table-column>
-                    	<el-table-column label="职责描述" prop="description"></el-table-column>
-                    	<el-table-column label="停用该职责" prop="disabled_t_description"></el-table-column>
-                    	<el-table-column label="责任类型" prop="type_t_description"></el-table-column>
-                    	<el-table-column label="是否关键责任" prop="isKey_t_description"></el-table-column>
-                    	<el-table-column label="是否独立责任" prop="singleResp_t_description"></el-table-column>
-                    	<el-table-column label="是否安全责任" prop="isSafeResp_t_description"></el-table-column>
+                    	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
+                    	<el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column>
+                    	<el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column>
+                    	<el-table-column width="100" label="关键责任" prop="isKey_t_description"></el-table-column>
+                    	<el-table-column width="100" label="独立责任" prop="singleResp_t_description"></el-table-column>
+                    	<el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column>
+                    	<el-table-column label="上层责任" prop="pid_t_description"></el-table-column>
+						<el-table-column width="140" fixed="right" label="操作">
+							<template scope="scope">
+								<!-- el-tooltip class="item" effect="light" content="责任查看" placement="bottom">
+									<el-button size="mini" type="warning" icon="fa-check" @click="viewDetail(scope.row)"></el-button>
+								</el-tooltip -->
+								<el-tooltip class="item" effect="light" content="责任分解" placement="bottom">
+									<el-button size="mini" type="info" icon="fa-user-plus" @click="editSubResp(scope.row)"></el-button>
+								</el-tooltip>
+								<el-tooltip class="item" effect="light" content="下层责任" placement="bottom">
+									<el-button size="mini" type="success" icon="fa-users" @click="viewSubResp(scope.row)"></el-button>
+								</el-tooltip>
+								
+							</template>
+						</el-table-column>
                     
                 </sf-table>
             </div>
         </el-row>
     </sf-panel>
     <sf-form-dialog ref="jatRespDepModal"
-                    title="jat_resp_dep"
+                    title="职责"
                     v-model="showJatRespDepModal"
                     :mode="jatRespDepEditMode"
                     url="jat/response/jatRespDep/save.do" 
@@ -76,16 +91,43 @@
 					<el-form-item label="责任类型" prop="type">
 			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="责任类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<el-form-item label="是否关键责任" prop="is_key">
-			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="是否关键责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<el-form-item label="关键责任" prop="is_key">
+			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="关键责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<el-form-item label="是否独立责任" prop="single_resp">
-			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="是否独立责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<el-form-item label="独立责任" prop="single_resp">
+			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="独立责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<el-form-item label="是否安全责任" prop="is_safe_resp">
-			            <sf-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="是否安全责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<el-form-item label="安全责任" prop="is_safe_resp">
+			            <sf-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="安全责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
     </sf-form-dialog>
+    <el-dialog title="查看下层责任" :visible.sync="dialogTableVisible">
+		<sf-table ref="subRespTable"
+                          highlight-current-row
+                          :height="500"
+                          :show-import="false"
+                          url="jat/response/jatRespDep/list.do" 
+                          @current-change="onCurrentChange"
+                          :query-condition="subRespCondition">
+            <el-table-column label="职责名称" prop="name"></el-table-column>
+           	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
+           	<!-- el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column -->
+           	<el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column>
+           	<!-- el-table-column width="100" label="关键责任" prop="isKey_t_description"></el-table-column -->
+           	<!-- el-table-column width="100" label="独立责任" prop="singleResp_t_description"></el-table-column -->
+           	<!-- el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column -->
+           	<el-table-column label="上层责任" prop="pid_t_description"></el-table-column>
+        	<el-table-column width="90" label="操作">
+				<template scope="scope">
+					<el-button size="mini" type="danger" icon="delete" @click="deleteSubResp(scope.row)">删除</el-button>
+				</template>
+			</el-table-column>
+        </sf-table>
+		<span slot="footer" class="dialog-footer">
+			<el-button @click="dialogTableVisible=false">取 消</el-button>
+			<el-button type="primary" @click="dialogTableVisible=false">确 定</el-button>
+		</span>
+	</el-dialog>
 </div>
 <script>
 
@@ -96,8 +138,11 @@
             queryCondition: {
                 name: ''
             },
-            currentRow: null,
-			jatRespDepSelection:[],
+            subRespCondition: {
+				pid: null
+			},
+			currentRow: null,
+			jatRespDepSelection: [],
             jatRespDepTableColumns: [
                 {
                     title: '职责编号',
@@ -133,7 +178,8 @@
                 }
             ],
             showJatRespDepModal: false,
-            jatRespDepEditMode: 'add',//'edit','view'
+			dialogTableVisible: false,
+			jatRespDepEditMode: 'add',//'edit','view'
             jatRespDepForm: {
                 id: null ,
                 name: null ,
@@ -142,7 +188,8 @@
                 type: null ,
                 isKey: null ,
                 singleResp: null ,
-                isSafeResp: null 
+                isSafeResp: null ,
+                pid: null
             },
             jatRespDepValidate: {
             	//此处添加字段数据合理性验证
@@ -162,6 +209,7 @@
             },
             addJatRespDep: function () {
                 this.jatRespDepForm.id = null;
+                this.jatRespDepForm.pid = null;
                 this.jatRespDepEditMode = 'add';
                 this.showJatRespDepModal = true;
             },
@@ -178,28 +226,52 @@
             },
             deleteJatRespDep: function () {
                 var self = this;
-                if(self.JatRespDepSelection.length==0)
-                {
-                	self.$message.warning('请选中要删除的记录！');
-                	return;
-                }
-                this.$confirm('确定删除[' + self.JatRespDepSelection.length+']条记录?','提示',{
-                    type: 'warning',
-                    callback: function(action){
-                        if(action === 'confirm'){
-                        	var ids = [];
-                        	for(var i=0;i<self.JatRespDepSelection.length;i++)
-                        	{
-                        		ids.push(self.JatRespDepSelection[i].id);
-                        	}
-                            self.$post('jat/response/jatRespDep/delete.do', {ids: ids}, function () {
-                                self.$message.success('删除成功！');
-                                self.$refs['jatRespDepTable'].reload();
-                            });
-                        }
-                    }
+                this.$confirm('确定删除所选职责及相关信息?','提示',{
+                	type: 'warning',
+					callback: function(action){
+						if(action === 'confirm'){
+							self.$post('jat/response/jatRespDep/delete.do', 
+								{ids: self.jatRespDepSelection.map(function (user) {
+                                    return user.id;
+                                })},
+								function () {
+									self.$message.success('删除成功！');
+									self.$refs['jatRespDepTable'].reload();
+								}
+							);
+						}
+					}
                 });
-            }
+            },
+            viewDetail: function (row) {
+				this.jatRespDepForm.id = row.id;
+                this.jatRespDepEditMode = 'view';
+                this.showJatRespDepModal = true;
+			},
+			editSubResp: function (row) {
+				this.jatRespDepForm.pid = row.id;
+				this.jatRespDepForm.id = null;
+                this.jatRespDepEditMode = 'add';
+                this.showJatRespDepModal = true;
+			},
+			viewSubResp: function (row) {
+				this.subRespCondition.pid = row.id;
+				this.dialogTableVisible = true;
+			},
+			deleteSubResp: function (row) {
+				var self = this;
+				this.$confirm("确定删除[" + row.name + ']?','提示',{
+					type: 'warning',
+					callback: function(action){
+						if(action === 'confirm'){
+							self.$post('jat/response/jatRespDep/delete.do', {ids: [row.id]}, function () {
+								self.$message.success('删除成功！');
+								self.$refs['subRespTable'].reload();
+							});
+						}
+					}
+				});
+			}
         }
     })
 </script>
