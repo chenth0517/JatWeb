@@ -162,9 +162,9 @@ public class JatRespDepServiceImpl implements JatRespDepService
 	 * @param 
 	 * @return
 	 */
-	 @Override
-	 public PagingBean	queryRecords(QueryFilter queryFilter)
-	 {
+	@Override
+	public PagingBean	queryRecords(QueryFilter queryFilter)
+	{
 		String sql = "select e.* from jat_resp_dep e";
 		PagingBean pb = jdbcDao.queryForPaging(sql+queryFilter.getWhereSql(),queryFilter.getConditionValues(), queryFilter.getPageSize(), queryFilter.getPageIndex());
 	 
@@ -184,5 +184,12 @@ public class JatRespDepServiceImpl implements JatRespDepService
 //		filedRefInfoMap.put("adviseManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
 		CommonTranslateUtil.translateMultiReferenceColumn(records, null, DictItemColumRefType.ID_COLUMN, filedRefInfoMap);
 		return pb;
-	 }
+	}
+
+	public List<Map<String, Object>>	loadSysOrg()
+	{
+		String printFullSql = "select id, name from sys_organization";
+		logger.info(printFullSql);
+		return this.jdbcDao.queryForList(printFullSql);
+	}
 }

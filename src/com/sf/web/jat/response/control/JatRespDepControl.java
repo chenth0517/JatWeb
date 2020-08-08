@@ -106,10 +106,16 @@ public class JatRespDepControl extends BasicControl
 		return this.pageView(page);
 		
 	}
+	
 	//参数名 file 请勿轻易修改
 	@SmartComment("Excel文件导入")
 	public SmartView importFile(File file)
 	{
 		return SmartView.SUCCESS();
+	}
+	
+	@SmartComment("获取所有设备类型")
+	public SmartView loadSysOrg() {
+		return SmartView.SUCCESS(this.jatRespDepService.loadSysOrg());
 	}
 }

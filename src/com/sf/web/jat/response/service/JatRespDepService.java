@@ -50,7 +50,6 @@ public interface JatRespDepService
 	 */
 	 public JatRespDep	get(Integer id);
 	 
-	 
 	 /**
 	 * 多字段组合查询<br>
 	 * 添加时间:2020/05/29<br>
@@ -58,4 +57,12 @@ public interface JatRespDepService
 	 *@return
 	 */
 	 public PagingBean	queryRecords(QueryFilter queryFilter);
+	 
+	 /**
+	 * 多字段组合查询<br>
+	 * 添加时间:2020/08/07<br>
+	 *@param 
+	 *@return
+	 */
+	 public List<Map<String, Object>>	loadSysOrg();
 }

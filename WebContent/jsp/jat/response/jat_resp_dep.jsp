@@ -59,7 +59,9 @@
 								<el-tooltip class="item" effect="light" content="下层责任" placement="bottom">
 									<el-button size="mini" type="success" icon="fa-users" @click="viewSubResp(scope.row)"></el-button>
 								</el-tooltip>
-								
+								<el-tooltip class="item" effect="light" content="责任绑定" placement="bottom">
+									<el-button size="mini" type="warning" icon="fa-exchange" @click="bindResp(scope.row)"></el-button>
+								</el-tooltip>
 							</template>
 						</el-table-column>
                     
@@ -128,6 +130,29 @@
 			<el-button type="primary" @click="dialogTableVisible=false">确 定</el-button>
 		</span>
 	</el-dialog>
+    <sf-form-dialog ref="jatRespBindModal"
+                    title="职责绑定"
+                    v-model="showJatRespBindModal"
+                    :mode="jatRespBindEditMode"
+                    url="jat/response/jatRespDep/save111111.do" 
+                    :model="jatRespBindForm">
+        
+					<!-- el-form-item label="关系编号" prop="id">
+			            <el-input v-model.trim="jatRespBindForm.id" placeholder="职责编号" readonly></el-input>
+			        </el-form-item -->
+					<el-form-item label="职责名称" prop="respName">
+			            <el-input v-model.trim="jatRespBindForm.respName" placeholder="职责名称"  readonly></el-input>
+			        </el-form-item>
+					<el-form-item label="负责" prop="incharge">
+			            <sf-select width="100%" v-model.trim="jatRespBindForm.incharge" placeholder="负责" :multiple="false" url="jat/response/jatRespDep/loadSysOrg.do" value-field="id" text-field="name"/>
+			        </el-form-item>
+					<el-form-item label="参与" prop="participate">
+			            <sf-select width="100%" v-model.trim="jatRespBindForm.participate" placeholder="参与" :multiple="true" url="jat/response/jatRespDep/loadSysOrg.do" value-field="id" text-field="name"/>
+			        </el-form-item>
+					<el-form-item label="相关" prop="relate">
+			            <sf-select width="100%" v-model.trim="jatRespBindForm.relate" placeholder="关联" :multiple="true" url="jat/response/jatRespDep/loadSysOrg.do" value-field="id" text-field="name"/>
+			        </el-form-item>
+    </sf-form-dialog>
 </div>
 <script>
 
@@ -178,8 +203,10 @@
                 }
             ],
             showJatRespDepModal: false,
+            showJatRespBindModal: false,
 			dialogTableVisible: false,
 			jatRespDepEditMode: 'add',//'edit','view'
+			jatRespBindEditMode: 'add',//'edit','view'
             jatRespDepForm: {
                 id: null ,
                 name: null ,
@@ -190,6 +217,13 @@
                 singleResp: null ,
                 isSafeResp: null ,
                 pid: null
+            },
+            jatRespBindForm: {
+            	id: null ,
+            	respName: null ,
+            	incharge: null ,
+            	participate: null ,
+            	relate: null
             },
             jatRespDepValidate: {
             	//此处添加字段数据合理性验证
@@ -257,6 +291,12 @@
 			viewSubResp: function (row) {
 				this.subRespCondition.pid = row.id;
 				this.dialogTableVisible = true;
+			},
+			bindResp: function (row) {
+				this.jatRespBindForm.id = row.id;
+				this.jatRespBindForm.respName = row.name;
+                this.jatRespBindEditMode = 'edit';
+				this.showJatRespBindModal = true;
 			},
 			deleteSubResp: function (row) {
 				var self = this;
