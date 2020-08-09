@@ -3,6 +3,7 @@ package com.sf.web.jat.response.service;
 import java.util.*;
 
 import com.sf.web.jat.response.entity.JatRespOrgLink;
+import com.sf.web.jat.response.entity.JatRespOrgLinkDisp;
 import com.smartframework.core.dao.page.PagingBean;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 /**
@@ -49,7 +50,7 @@ public interface JatRespOrgLinkService
 	 *@param 
 	 *@return
 	 */
-	 public JatRespOrgLink	get(Integer id);
+	 public JatRespOrgLinkDisp	loadOne(Integer respId);
 	 
 	 
 	 /**

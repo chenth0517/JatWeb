@@ -57,10 +57,10 @@ public class JatRespOrgLinkControl extends BasicControl
 	}
 	
 	@SmartComment("按ID获取单个JatRespOrgLink实例")
-	public SmartView loadOne(Integer id)
+	public SmartView loadOne(Integer respId)
 	{
 		//TODO 请先验证参数有效性再使用
-		return SmartView.SUCCESS(this.jatRespOrgLinkService.get(id));
+		return SmartView.SUCCESS(this.jatRespOrgLinkService.loadOne(respId));
 	}
 	
 	//method标识是否执行导出,并根据pageSize<0确定是否全部导出

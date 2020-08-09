@@ -135,11 +135,12 @@
                     v-model="showJatRespBindModal"
                     :mode="jatRespBindEditMode"
                     url="jat/response/jatRespOrgLink/save.do" 
+                    :load-url="'jat/response/jatRespOrgLink/loadOne.do?respId='+jatRespBindForm.respId"
                     :model="jatRespBindForm">
         
-					<!-- el-form-item label="关系编号" prop="id">
+					<el-form-item label="关系编号" prop="id">
 			            <el-input v-model.trim="jatRespBindForm.respId" placeholder="职责编号" readonly></el-input>
-			        </el-form-item -->
+			        </el-form-item>
 					<el-form-item label="职责名称" prop="respName">
 			            <el-input v-model.trim="jatRespBindForm.respName" placeholder="职责名称"  readonly></el-input>
 			        </el-form-item>
@@ -294,6 +295,7 @@
 			},
 			bindResp: function (row) {
 				this.jatRespBindForm.respId = row.id;
+				console.log("this.jatRespBindForm.respId="+this.jatRespBindForm.respId);
 				this.jatRespBindForm.respName = row.name;
                 this.jatRespBindEditMode = 'edit';
 				this.showJatRespBindModal = true;

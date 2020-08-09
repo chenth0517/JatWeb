@@ -3,6 +3,7 @@ package com.sf.web.jat.response.service.impl;
 import java.util.*;
 
 import com.sf.web.jat.response.entity.JatRespOrgLink;
+import com.sf.web.jat.response.entity.JatRespOrgLinkDisp;
 import com.sf.web.jat.response.dao.JatRespOrgLinkOrmDao;
 import com.sf.web.jat.response.service.JatRespOrgLinkService;
 
@@ -190,13 +191,36 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 	 * @return
 	 */
 	 @Override
-	 public JatRespOrgLink	get(Integer id)
+	 public JatRespOrgLinkDisp	loadOne(Integer respId)
 	 {
-	 	if(ParameterUtils.isNotValidateId(id))
-		{
-			return null;
-		}
-	 	return this.jatRespOrgLinkOrmDao.findOne(id);
+		 List<JatRespOrgLink> linkList = this.jatRespOrgLinkOrmDao.findByRespId(respId);
+		 JatRespOrgLinkDisp jatRespOrgLinkDisp = new JatRespOrgLinkDisp();
+		 if(linkList.size()==0) return null;
+		 // 责任
+		 jatRespOrgLinkDisp.setRespId(linkList.get(0).getRespId());
+		 int i=0;
+
+		 List<Integer> participateList = new ArrayList<Integer>();
+		 List<Integer> relateList = new ArrayList<Integer>();
+		 
+		 for(i=0; i<linkList.size(); i++)
+		 {
+			 if(linkList.get(i).getType()==1)
+			 {
+				 jatRespOrgLinkDisp.setIncharge(linkList.get(i).getOrgId());
+			 }
+			 if(linkList.get(i).getType()==2)
+			 {
+				 participateList.add(linkList.get(i).getOrgId());
+			 }
+			 if(linkList.get(i).getType()==3)
+			 {
+				 relateList.add(linkList.get(i).getOrgId());
+			 }
+		 }
+		 jatRespOrgLinkDisp.setParticipate(participateList);
+		 jatRespOrgLinkDisp.setRelate(relateList);
+		 return jatRespOrgLinkDisp;
 	 }
 	 
 	 /**
