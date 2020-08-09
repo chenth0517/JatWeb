@@ -138,9 +138,9 @@
                     :load-url="'jat/response/jatRespOrgLink/loadOne.do?respId='+jatRespBindForm.respId"
                     :model="jatRespBindForm">
         
-					<el-form-item label="关系编号" prop="id">
+					<!-- el-form-item label="关系编号" prop="id">
 			            <el-input v-model.trim="jatRespBindForm.respId" placeholder="职责编号" readonly></el-input>
-			        </el-form-item>
+			        </el-form-item -->
 					<el-form-item label="职责名称" prop="respName">
 			            <el-input v-model.trim="jatRespBindForm.respName" placeholder="职责名称"  readonly></el-input>
 			        </el-form-item>
