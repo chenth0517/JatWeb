@@ -16,8 +16,8 @@ import com.smartframework.core.i18n.I18n;
 import com.smartframework.web.core.database.ColumnRefInfo;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.core.util.*;
+import com.smartframework.web.core.util.TranslateUtil.DictItemColumRefType;
 import com.smartframework.web.system.utility.util.CommonTranslateUtil;
-import com.smartframework.web.system.utility.util.CommonTranslateUtil.DictItemColumRefType;
 import com.smartframework.web.core.Constants;
 /**
  * @创建人    SmartWeb Code Plugin Created.
@@ -176,13 +176,23 @@ public class JatRespDepServiceImpl implements JatRespDepService
 		dictNameFieldNameMap.put("isKey", "JAT_YES_OR_NO");
 		dictNameFieldNameMap.put("singleResp", "JAT_YES_OR_NO");
 		dictNameFieldNameMap.put("isSafeResp", "JAT_YES_OR_NO");
-		CommonTranslateUtil.translateMultiDictColumn(records, dictNameFieldNameMap, DictItemColumRefType.ID_COLUMN);
+		try {
+			CommonTranslateUtil.translateMultiDictColumn(records, dictNameFieldNameMap, DictItemColumRefType.ID_COLUMN);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Map<String, ColumnRefInfo> filedRefInfoMap = new HashMap<String,ColumnRefInfo>();
 		filedRefInfoMap.put("pid", new ColumnRefInfo("jat_resp_dep", "id", "name", ""));
 //		filedRefInfoMap.put("technicalManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
 //		filedRefInfoMap.put("adviseManager", new ColumnRefInfo("sys_user", "id", "real_name", ""));
-		CommonTranslateUtil.translateMultiReferenceColumn(records, null, DictItemColumRefType.ID_COLUMN, filedRefInfoMap);
+		try {
+			CommonTranslateUtil.translateMultiReferenceColumn(records, null, DictItemColumRefType.ID_COLUMN, filedRefInfoMap);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return pb;
 	}
 

@@ -52,7 +52,6 @@ public interface JatRespOrgLinkService
 	 */
 	 public JatRespOrgLinkDisp	loadOne(Integer respId);
 	 
-	 
 	 /**
 	 * 多字段组合查询<br>
 	 * 添加时间:2020/08/08<br>
@@ -60,4 +59,12 @@ public interface JatRespOrgLinkService
 	 *@return
 	 */
 	 public PagingBean	queryRecords(QueryFilter queryFilter);
+	 
+	 /**
+	 * 多字段组合查询<br>
+	 * 添加时间:2020/08/08<br>
+	 *@param 
+	 *@return
+	 */
+	 public PagingBean	queryCurrUserRespByRespType(QueryFilter queryFilter);
 }

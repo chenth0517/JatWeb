@@ -63,7 +63,6 @@ public class JatRespOrgLinkControl extends BasicControl
 		return SmartView.SUCCESS(this.jatRespOrgLinkService.loadOne(respId));
 	}
 	
-	//method标识是否执行导出,并根据pageSize<0确定是否全部导出
 	@SmartComment("获取JatRespOrgLink实例的分页查询结果")
 	public SmartView list(String name,Integer pageSize,Integer pageIndex,String sortField,String sortOrder,String columns,String method)
 	{
@@ -82,25 +81,29 @@ public class JatRespOrgLinkControl extends BasicControl
 		queryFilter.setPageInfo(pageSize, pageIndex);
 		
 		PagingBean page = this.jatRespOrgLinkService.queryRecords(queryFilter);
-		// TODO 导出时使用
-		// if("export".equals(method))
-		// {
-		// 		List<HeaderConfig> headers = JsonUtil.getBeanListByJsonArray(columns, HeaderConfig.class); 
-		// 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		//			try
-		//			{
-		//				ExcelDataUtil.createExcelByMapList(page.getData(), headers).write(outputStream);
-		//			}
-		//			catch (IOException e)
-		//			{
-		//				return SmartView.ERROR(I18n.message("error.excel.export", new Object[] { e.getMessage() }));
-		//			}
-		//		return SmartView.FileView(outputStream, "文件.xls");
-		//}
-		//在Service中构建PagingBean实例,建议使用 return SmartView.pagingData(page); 代替下面语句
 		return this.pageView(page);
-		
 	}
+
+	@SmartComment("用户对应的职责")
+	public SmartView listCurrUserRespByRespType(Integer respType,Integer pageSize,Integer pageIndex,String sortField,String sortOrder)
+	{
+		QueryFilter queryFilter = new QueryFilter();
+		if(!ParameterUtils.isEmptyOrNull(respType))
+		{
+			queryFilter.addNumberFieldEqualCondition("e2.type", respType);
+		}
+		if(pageSize==null||pageIndex==null)
+		{
+			return SmartView.ERROR(I18n.message("error.parameter.empty","分页参数{0}不能为空",new Object[]{"pageIndex,pageSize"}));
+		}
+		//设置分页和排序
+		queryFilter.addSorted(sortField, sortOrder);
+		queryFilter.setPageInfo(pageSize, pageIndex);
+		
+		PagingBean page = this.jatRespOrgLinkService.queryCurrUserRespByRespType(queryFilter);
+		return this.pageView(page);
+	}
+
 	//参数名 file 请勿轻易修改
 	@SmartComment("Excel文件导入")
 	public SmartView importFile(File file)

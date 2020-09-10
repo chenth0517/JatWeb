@@ -14,7 +14,9 @@ import com.smartframework.core.dao.page.PagingBean;
 import com.smartframework.core.i18n.I18n;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.core.util.*;
+import com.smartframework.web.core.util.TranslateUtil.DictItemColumRefType;
 import com.smartframework.web.core.Constants;
+import com.smartframework.web.system.utility.util.CommonTranslateUtil;
 /**
  * @创建人    SmartWeb Code Plugin Created.
  * @日期    2020/08/08
@@ -235,4 +237,41 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 		String sql = "select e.* from jat_resp_org_link e";
 		return jdbcDao.queryForPaging(sql+queryFilter.getWhereSql(),queryFilter.getConditionValues(), queryFilter.getPageSize(), queryFilter.getPageIndex());
 	 }
+	 
+	/**
+	* 多字段组合查询<br>
+	* 添加时间:2020/08/08<br>
+	* @param 
+	* @return
+	*/
+	@Override
+	public PagingBean	queryCurrUserRespByRespType(QueryFilter queryFilter)
+	{
+		String whereClause = queryFilter.getNoWherePreFilledValWhereSql();
+		StringBuilder sb = new StringBuilder();
+		sb.append("select e1.name as resp_name, e1.disabled as resp_status, e1.type as resp_type from jat_resp_dep e1 where e1.id in ");
+		sb.append("( ");
+		sb.append("select e2.resp_id from jat_resp_org_link e2 where ");
+		sb.append(whereClause);		
+		sb.append(" and e2.org_id in ");
+		sb.append("( ");
+		sb.append("select e3.org_id from sys_org_user_link e3 where e3.user_id = 43 ");
+		sb.append(") ");
+		sb.append(")");
+		String sql = sb.toString();
+		logger.info("[SQL_LOG]: "+sql);
+		PagingBean pb = jdbcDao.queryForPaging(sql, queryFilter.getPageSize(), queryFilter.getPageIndex());
+		
+		List<Map<String,Object>> records = pb.getData();
+		Map<String,String> dictNameFieldNameMap = new HashMap<String,String>();
+		dictNameFieldNameMap.put("respType", "JAT_RESP_TYPE");
+		dictNameFieldNameMap.put("respStatus", "JAT_DISABLED");
+		try {
+			CommonTranslateUtil.translateMultiDictColumn(records, dictNameFieldNameMap, DictItemColumRefType.ID_COLUMN);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pb;
+	}
 }
