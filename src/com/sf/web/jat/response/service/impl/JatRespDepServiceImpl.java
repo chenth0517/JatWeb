@@ -16,8 +16,8 @@ import com.smartframework.core.i18n.I18n;
 import com.smartframework.web.core.database.ColumnRefInfo;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.core.util.*;
-import com.smartframework.web.core.util.TranslateUtil.DictItemColumRefType;
 import com.smartframework.web.system.utility.util.CommonTranslateUtil;
+import com.smartframework.web.system.utility.util.CommonTranslateUtil.DictItemColumRefType;
 import com.smartframework.web.core.Constants;
 /**
  * @创建人    SmartWeb Code Plugin Created.
