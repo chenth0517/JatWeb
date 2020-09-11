@@ -46,7 +46,7 @@
                     	<el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column>
                     	<el-table-column width="100" label="关键责任" prop="isKey_t_description"></el-table-column>
                     	<el-table-column width="100" label="独立责任" prop="singleResp_t_description"></el-table-column>
-                    	<el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column>
+                    	<!--el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column-->
                     	<el-table-column label="上层责任" prop="pid_t_description"></el-table-column>
 						<el-table-column width="140" fixed="right" label="操作">
 							<template scope="scope">
@@ -90,18 +90,18 @@
 					<el-form-item label="停用该职责" prop="disabled">
 			            <sf-select v-model.trim="jatRespDepForm.disabled" placeholder="停用该职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_DISABLED" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<el-form-item label="责任类型" prop="type">
+					<!--el-form-item label="责任类型" prop="type">
 			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="责任类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
-			        </el-form-item>
+			        </el-form-item-->
 					<el-form-item label="关键责任" prop="is_key">
 			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="关键责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<el-form-item label="独立责任" prop="single_resp">
 			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="独立责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<el-form-item label="安全责任" prop="is_safe_resp">
+					<!--el-form-item label="安全责任" prop="is_safe_resp">
 			            <sf-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="安全责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
-			        </el-form-item>
+			        </el-form-item-->
     </sf-form-dialog>
     <el-dialog title="查看下层责任" :visible.sync="dialogTableVisible">
 		<sf-table ref="subRespTable"
@@ -114,7 +114,7 @@
             <el-table-column label="职责名称" prop="name"></el-table-column>
            	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
            	<!-- el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column -->
-           	<el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column>
+           	<!-- el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="关键责任" prop="isKey_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="独立责任" prop="singleResp_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column -->

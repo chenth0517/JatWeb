@@ -88,7 +88,7 @@
 									 url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do?respType=1"
 								   >
 									<el-table-column label="职责名称" prop="respName" width="280"></el-table-column>
-									<el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column>
+									<!-- el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column -->
 									<el-table-column label="职责状态" prop="respType_t_description" width="100"></el-table-column>
 								</sf-table>
 							</div>
@@ -112,7 +112,7 @@
 									 url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do?respType=2"
 								   >
 									<el-table-column label="职责名称" prop="respName" width="280"></el-table-column>
-									<el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column>
+									<!-- el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column -->
 									<el-table-column label="职责状态" prop="respType_t_description" width="100"></el-table-column>
 								</sf-table>
 							</div>
@@ -136,7 +136,7 @@
 									 url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do?respType=3"
 								   >
 									<el-table-column label="职责名称" prop="respName" width="280"></el-table-column>
-									<el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column>
+									<!-- el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column -->
 									<el-table-column label="职责状态" prop="respType_t_description" width="100"></el-table-column>
 								</sf-table>
 							</div>
