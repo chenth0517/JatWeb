@@ -43,23 +43,23 @@
                     	<el-table-column label="职责名称" prop="name"></el-table-column>
                     	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
                     	<el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column>
-                    	<el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column>
-                    	<el-table-column width="100" label="关键责任" prop="isKey_t_description"></el-table-column>
-                    	<el-table-column width="100" label="独立责任" prop="singleResp_t_description"></el-table-column>
-                    	<!--el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column-->
-                    	<el-table-column label="上层责任" prop="pid_t_description"></el-table-column>
+                    	<el-table-column width="100" label="职责类型" prop="type_t_description"></el-table-column>
+                    	<el-table-column width="100" label="关键职责" prop="isKey_t_description"></el-table-column>
+                    	<el-table-column width="100" label="独立职责" prop="singleResp_t_description"></el-table-column>
+                    	<!--el-table-column width="100" label="安全职责" prop="isSafeResp_t_description"></el-table-column-->
+                    	<el-table-column label="上层职责" prop="pid_t_description"></el-table-column>
 						<el-table-column width="140" fixed="right" label="操作">
 							<template scope="scope">
-								<!-- el-tooltip class="item" effect="light" content="责任查看" placement="bottom">
+								<!-- el-tooltip class="item" effect="light" content="职责查看" placement="bottom">
 									<el-button size="mini" type="warning" icon="fa-check" @click="viewDetail(scope.row)"></el-button>
 								</el-tooltip -->
-								<el-tooltip class="item" effect="light" content="责任分解" placement="bottom">
+								<el-tooltip class="item" effect="light" content="职责分解" placement="bottom">
 									<el-button size="mini" type="info" icon="fa-user-plus" @click="editSubResp(scope.row)"></el-button>
 								</el-tooltip>
-								<el-tooltip class="item" effect="light" content="下层责任" placement="bottom">
+								<el-tooltip class="item" effect="light" content="下层职责" placement="bottom">
 									<el-button size="mini" type="success" icon="fa-users" @click="viewSubResp(scope.row)"></el-button>
 								</el-tooltip>
-								<el-tooltip class="item" effect="light" content="责任绑定" placement="bottom">
+								<el-tooltip class="item" effect="light" content="职责绑定" placement="bottom">
 									<el-button size="mini" type="warning" icon="fa-exchange" @click="bindResp(scope.row)"></el-button>
 								</el-tooltip>
 							</template>
@@ -90,20 +90,20 @@
 					<el-form-item label="停用该职责" prop="disabled">
 			            <sf-select v-model.trim="jatRespDepForm.disabled" placeholder="停用该职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_DISABLED" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<!--el-form-item label="责任类型" prop="type">
-			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="责任类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
+					<!--el-form-item label="职责类型" prop="type">
+			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="职责类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
 			        </el-form-item-->
-					<el-form-item label="关键责任" prop="is_key">
-			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="关键责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<el-form-item label="关键职责" prop="is_key">
+			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="关键职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<el-form-item label="独立责任" prop="single_resp">
-			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="独立责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<el-form-item label="独立职责" prop="single_resp">
+			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="独立职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
-					<!--el-form-item label="安全责任" prop="is_safe_resp">
-			            <sf-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="安全责任" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<!--el-form-item label="安全职责" prop="is_safe_resp">
+			            <sf-select v-model.trim="jatRespDepForm.isSafeResp" placeholder="安全职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item-->
     </sf-form-dialog>
-    <el-dialog title="查看下层责任" :visible.sync="dialogTableVisible">
+    <el-dialog title="查看下层职责" :visible.sync="dialogTableVisible">
 		<sf-table ref="subRespTable"
                           highlight-current-row
                           :height="500"
@@ -114,11 +114,11 @@
             <el-table-column label="职责名称" prop="name"></el-table-column>
            	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
            	<!-- el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column -->
-           	<!-- el-table-column width="100" label="责任类型" prop="type_t_description"></el-table-column -->
-           	<!-- el-table-column width="100" label="关键责任" prop="isKey_t_description"></el-table-column -->
-           	<!-- el-table-column width="100" label="独立责任" prop="singleResp_t_description"></el-table-column -->
-           	<!-- el-table-column width="100" label="安全责任" prop="isSafeResp_t_description"></el-table-column -->
-           	<el-table-column label="上层责任" prop="pid_t_description"></el-table-column>
+           	<!-- el-table-column width="100" label="职责类型" prop="type_t_description"></el-table-column -->
+           	<!-- el-table-column width="100" label="关键职责" prop="isKey_t_description"></el-table-column -->
+           	<!-- el-table-column width="100" label="独立职责" prop="singleResp_t_description"></el-table-column -->
+           	<!-- el-table-column width="100" label="安全职责" prop="isSafeResp_t_description"></el-table-column -->
+           	<el-table-column label="上层职责" prop="pid_t_description"></el-table-column>
         	<el-table-column width="90" label="操作">
 				<template scope="scope">
 					<el-button size="mini" type="danger" icon="delete" @click="deleteSubResp(scope.row)">删除</el-button>
@@ -187,7 +187,7 @@
                     key: 'disabled'
                 },
                 {
-                    title: '责任类型',
+                    title: '职责类型',
                     key: 'type'
                 },
                 {

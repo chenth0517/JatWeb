@@ -39,7 +39,7 @@ public class JatRespDep  implements Serializable
     
     
 	@Column(name = "type" ,length = 255)  
-	@SmartFieldAnnotation(description="1代表部门责任，2代表岗位责任",checkValueRange=false ,minLength=0,maxLength = 255)
+	@SmartFieldAnnotation(description="1代表部门职责，2代表岗位职责",checkValueRange=false ,minLength=0,maxLength = 255)
     private String type;
     
     

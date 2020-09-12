@@ -198,7 +198,7 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 		 List<JatRespOrgLink> linkList = this.jatRespOrgLinkOrmDao.findByRespId(respId);
 		 JatRespOrgLinkDisp jatRespOrgLinkDisp = new JatRespOrgLinkDisp();
 		 if(linkList.size()==0) return null;
-		 // 责任
+		 // 职责
 		 jatRespOrgLinkDisp.setRespId(linkList.get(0).getRespId());
 		 int i=0;
 

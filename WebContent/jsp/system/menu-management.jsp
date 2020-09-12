@@ -103,7 +103,7 @@
                 orderno: 0
             },
             menuValidate: {
-                name: [{required: true, message: '角色名称不能为空', trigger: 'blur'}],
+                name: [{required: true, message: '岗位名称不能为空', trigger: 'blur'}],
                 url: [
                     { required: true, message: 'URL地址不能为空', trigger: 'blur' }
                 ]

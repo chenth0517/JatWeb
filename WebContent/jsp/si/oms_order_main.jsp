@@ -294,7 +294,7 @@
               	this.queryCondition.respUser = ${UserObject.id };
 			},
             isHiddenFun:function(){
-                //根据当前角色显示或隐藏某些功能按钮
+                //根据当前岗位显示或隐藏某些功能按钮
                 var self = this;
                 this.$post("si/order/orderMng/loadUserRole.do",function (success) {
                     self.isHidden = success.data;
@@ -589,7 +589,7 @@
             },
         },
     	mounted:function(){
-			//获取登陆用户角色
+			//获取登陆用户岗位
 			this.isHiddenFun();
             //获取客户列表
             this.loadCustomers();

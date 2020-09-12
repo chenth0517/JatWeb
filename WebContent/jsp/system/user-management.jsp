@@ -81,7 +81,7 @@
                     <el-table-column label="联系电话" prop="phone" width="150"></el-table-column>
                     <el-table-column label="操作" align="center" width="200">
                         <template scope="scope">
-                            <el-button size="small" type="info" @click="changeUserRole(scope.row)">角色授权</el-button>
+                            <el-button size="small" type="info" @click="changeUserRole(scope.row)">岗位授权</el-button>
                         </template>
                     </el-table-column>
                 </sf-table>
@@ -154,11 +154,11 @@
                @close="onRoleDialogClose"
                v-cloak>
         <span slot="title" style="color:#f60;">
-            <sf-icon icon="fa-user-circle" left></sf-icon>用户角色授权
+            <sf-icon icon="fa-user-circle" left></sf-icon>岗位授权
         </span>
         <sf-toolbar>
             <div slot="searcher">
-                <el-input placeholder="输入用角色名称" v-model.trim="roleQueryCondition.roleName" icon="search" style="width: 400px;"></el-input>
+                <el-input placeholder="输入岗位名称" v-model.trim="roleQueryCondition.roleName" icon="search" style="width: 400px;"></el-input>
             </div>
         </sf-toolbar>
         <sf-table ref="roleTable"
@@ -172,8 +172,8 @@
                   @selection-change="onRoleSelectionChange">
             <el-table-column type="selection" width="50" align="center" reserve-selection></el-table-column>
             <el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>
-            <el-table-column label="角色名称" prop="name" width="200" sortable="custom"></el-table-column>
-            <el-table-column label="角色描述" prop="description"></el-table-column>
+            <el-table-column label="岗位名称" prop="name" width="200" sortable="custom"></el-table-column>
+            <el-table-column label="岗位描述" prop="description"></el-table-column>
         </sf-table>
         <div slot="footer">
             <el-button @click="showRoleSelector=false">取消</el-button>
@@ -462,7 +462,7 @@
                     userId: self.roleUser.id
                 }, function () {
                     self.showRoleSelector = false;
-                    self.$message.success('给用户' + self.roleUser.realName +'更改角色成功！');
+                    self.$message.success('给用户' + self.roleUser.realName +'更改岗位成功！');
                 })
             },
             onRoleDialogClose: function(){

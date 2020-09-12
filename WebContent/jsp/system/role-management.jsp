@@ -19,17 +19,17 @@
 </head>
 <body>
 <div id="role-management">
-    <sf-panel title="岗位角色" v-cloak>
+    <sf-panel title="岗位定义" v-cloak>
         <el-row style="min-width: 1200px;">
             <div class="role-div">
                 <sf-toolbar>
                     <div slot="searcher">
-                        <el-input placeholder="输入用角色名称" v-model.trim="queryCondition.roleName" icon="search" style="width: 400px;"></el-input>
+                        <el-input placeholder="输入用岗位名称" v-model.trim="queryCondition.roleName" icon="search" style="width: 400px;"></el-input>
                     </div>
                     <el-button type="success" icon="plus" @click="addRole">添加</el-button>
                     <el-button type="info" icon="edit" @click="editRole" :disabled="!currentRow">编辑</el-button>
                     <el-button type="danger" icon="delete" @click="deleteRole" :disabled="!currentRow">删除</el-button>
-                    <el-button type="primary" icon="fa-gears" @click="roleMenuFuncSetting" :disabled="!currentRow">角色配置</el-button>
+                    <el-button type="primary" icon="fa-gears" @click="roleMenuFuncSetting" :disabled="!currentRow">岗位配置</el-button>
                 </sf-toolbar>
                 <sf-table ref="roleTable"
                           highlight-current-row
@@ -39,9 +39,9 @@
                           :query-condition="queryCondition"
                           @current-change="onCurrentChange">
                     <el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>
-                    <el-table-column label="角色编码" prop="roleCode" width="200"></el-table-column>
-                    <el-table-column label="角色名称" prop="name" sortable="custom"  width="200"></el-table-column>
-                    <el-table-column label="角色描述" prop="description"></el-table-column>
+                    <el-table-column label="岗位编码" prop="roleCode" width="200"></el-table-column>
+                    <el-table-column label="岗位名称" prop="name" sortable="custom"  width="200"></el-table-column>
+                    <el-table-column label="岗位描述" prop="description"></el-table-column>
                 </sf-table>
             </div>
             <div class="menu-div">
@@ -69,22 +69,22 @@
         </el-row>
     </sf-panel>
     <sf-form-dialog ref="roleModal"
-                    title="角色"
+                    title="岗位"
                     v-model="showRoleModal"
                     :mode="roleEditMode"
                     url="role/save.do"
                     :model="roleForm"
                     :rules="roleValidate"
                     @on-success="onRoleModalSuccess">
-        <el-form-item label="角色编码" prop="roleCode">
-            <el-input v-model.trim="roleForm.roleCode" placeholder="输入角色编码"></el-input>
+        <el-form-item label="岗位编码" prop="roleCode">
+            <el-input v-model.trim="roleForm.roleCode" placeholder="输入岗位 编码"></el-input>
         </el-form-item>
-        <el-form-item label="角色名称" prop="name">
-            <el-input v-model.trim="roleForm.name" placeholder="输入角色名称"></el-input>
+        <el-form-item label="岗位名称" prop="name">
+            <el-input v-model.trim="roleForm.name" placeholder="输入岗位名称"></el-input>
         </el-form-item>
-        <el-form-item label="角色描述" prop="description">
+        <el-form-item label="岗位描述" prop="description">
             <el-input v-model.trim="roleForm.description"
-                      placeholder="简要描述角色功能及职责"
+                      placeholder="简要描述岗位功能及职责"
                       type="textarea"
                       :autosize="{ minRows: 2, maxRows: 4}">
             </el-input>
@@ -95,7 +95,7 @@
                v-cloak
                size="tiny">
         <span slot="title" style="color:#f60;">
-            <sf-icon icon="fa-gears" left></sf-icon>角色菜单功能配置
+            <sf-icon icon="fa-gears" left></sf-icon>岗位菜单功能配置
         </span>
         <el-tabs v-model="activeTab">
             <el-tab-pane label="菜单权限" name="menu">
@@ -138,15 +138,15 @@
             currentRow: null,
             roleTableColumns: [
                 {
-                    title: '角色编码',
+                    title: '岗位编码',
                     key: 'roleCode'
                 },
                 {
-                    title: '角色名称',
+                    title: '岗位名称',
                     key: 'name'
                 },
                 {
-                    title: '角色描述',
+                    title: '岗位描述',
                     key: 'description'
                 }
             ],
@@ -159,9 +159,9 @@
                 description: ""
             },
             roleValidate: {
-                roleCode: [{required: true, message: '角色编码不能为空', trigger: 'blur'}],
-                name: [{required: true, message: '角色名称不能为空', trigger: 'blur'}],
-                description: [{required: true, message: '角色描述不能为空', trigger: 'blur'}]
+                roleCode: [{required: true, message: '岗位编码不能为空', trigger: 'blur'}],
+                name: [{required: true, message: '岗位名称不能为空', trigger: 'blur'}],
+                description: [{required: true, message: '岗位描述不能为空', trigger: 'blur'}]
             },
             activeTab: 'menu',
             treeProps: {
@@ -223,7 +223,7 @@
                     callback: function(action){
                         if(action === 'confirm'){
                             self.$post('role/delete.do', {roleId: self.currentRow.id}, function () {
-                                self.$message.success('删除角色成功！');
+                                self.$message.success('删除岗位成功！');
                                 self.$refs['roleTable'].reload();
                             });
                         }
@@ -240,14 +240,14 @@
             getRoleTreeData: function () {
                 var self = this;
                 if(self.currentRow){
-                    //获取角色具有的菜单权限
+                    //获取岗位具有的菜单权限
                     self.$post('role/listRoleMenus.do',{
                         roleId: self.currentRow.id
                     },function (json) {
                         self.roleMenuListData = json.data;
                     });
 
-                    //获取角色具有的功能权限
+                    //获取岗位具有的功能权限
                     self.$post('role/listRoleActions.do',{
                         roleId: self.currentRow.id
                     },function (json) {
@@ -312,7 +312,7 @@
                         }, function () {
                             self.$notify.success({
                                 title: '提示',
-                                message: '保存角色菜单成功!',
+                                message: '保存岗位菜单成功!',
                                 duration: 1000
                             });
                             self.menuChanged = false;
@@ -327,7 +327,7 @@
                         }, function () {
                             self.$notify.success({
                                 title: '提示',
-                                message: '保存角色功能成功!',
+                                message: '保存岗位功能成功!',
                                 duration: 1000
                             });
                             self.funcChanged = false;
