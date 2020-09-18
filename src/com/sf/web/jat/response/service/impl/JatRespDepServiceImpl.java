@@ -115,6 +115,7 @@ public class JatRespDepServiceImpl implements JatRespDepService
 	{
 		return this.jatRespDepOrmDao.findAll(idList);
 	}
+	
 	/**
 	 * 根据ID删除对象<br>
 	 * 添加时间:2020/05/29<br>
@@ -137,6 +138,39 @@ public class JatRespDepServiceImpl implements JatRespDepService
 		{
 			return e.getMessage();
 		}
+		return Constants.SUCCESS;
+	}
+	
+	/**
+	 * 根据ID改变对象顺序<br>
+	 * 添加时间:2020/05/29<br>
+	 * @param 
+	 * @return
+	 */
+	@Override
+	public String 	changeOrder(Integer id, Integer isDown)
+	{
+		JatRespDep currRecord = get(id);
+		if(currRecord == null) return "record not found";
+		
+		String oldIdxStr = currRecord.getIdx();
+		if(ParameterUtils.isEmptyOrNull(oldIdxStr)) return "idx is null";
+		
+		String oldNumStr = oldIdxStr.substring(oldIdxStr.lastIndexOf(".")+1);
+		Integer oldNum = Integer.parseInt(oldNumStr);
+		Integer newNum = oldNum;
+		Integer maxNum = 999;
+		if(isDown == 1)
+		{
+			newNum = oldNum+1;
+		}
+		else
+		{
+			newNum = oldNum-1;
+		}
+		String newIdxStr = oldIdxStr.substring(0, oldIdxStr.lastIndexOf(".")+1) + newNum.toString();
+		
+		
 		return Constants.SUCCESS;
 	}
 	

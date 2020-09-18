@@ -23,6 +23,11 @@ public class JatRespDep  implements Serializable
     private Integer id;
     
     
+	@Column(name = "idx" ,length = 255)  
+	@SmartFieldAnnotation(description="章节索引",checkValueRange=false ,minLength=0,maxLength = 255)
+    private String idx;
+    
+    
 	@Column(name = "name" ,length = 255)  
 	@SmartFieldAnnotation(description="职责名称",checkValueRange=false ,minLength=0,maxLength = 255)
     private String name;
@@ -74,7 +79,16 @@ public class JatRespDep  implements Serializable
     }
 
     
-    public void setName(String name)
+    public String getIdx() {
+		return idx;
+	}
+
+	public void setIdx(String idx) {
+		this.idx = idx;
+	}
+
+	
+	public void setName(String name)
     {
         this.name = name ;
     }

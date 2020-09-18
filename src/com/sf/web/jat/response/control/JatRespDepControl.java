@@ -57,6 +57,13 @@ public class JatRespDepControl extends BasicControl
 		return this.dbAccess(this.jatRespDepService.delete(ids,false));
 	}
 	
+	@SmartComment("按ID列表删除JatRespDep对象")
+	public SmartView changeOrder(Integer id, Integer isDown)
+	{
+		//TODO 请先验证参数有效性再使用
+		return this.dbAccess(this.jatRespDepService.changeOrder(id, isDown));
+	}
+	
 	@SmartComment("按ID获取单个JatRespDep实例")
 	public SmartView loadOne(Integer id)
 	{

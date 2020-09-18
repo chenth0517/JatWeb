@@ -1,6 +1,7 @@
 package com.sf.web.jat.response.service;
 
 import java.util.*;
+
 import com.sf.web.jat.response.entity.JatRespDep;
 import com.smartframework.core.dao.page.PagingBean;
 import com.smartframework.web.core.queryfilter.QueryFilter;
@@ -41,6 +42,14 @@ public interface JatRespDepService
 	 *@return
 	 */
 	public String 	delete(List<Integer> idList,boolean permanently);
+	
+	/**
+	 * 根据ID改变对象顺序<br>
+	 * 添加时间:2020/05/29<br>
+	 *@param 
+	 *@return
+	 */
+	public String 	changeOrder(Integer id, Integer isDown);
 	
 	/**
 	 * 根据ID值查询<br>

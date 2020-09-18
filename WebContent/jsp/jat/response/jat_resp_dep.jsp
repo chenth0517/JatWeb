@@ -38,29 +38,36 @@
                           @current-change="onCurrentChange"
                           @selection-change="onJatRespDepSelectionChange">
                         <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    	<el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>
+                    	<el-table-column label="#" prop="__index" width="80" align="center"></el-table-column>
+                    	<el-table-column width="120" label="章节索引" prop="idx" align="center"></el-table-column>
                     	<!-- el-table-column label="职责编号" prop="id"></el-table-column -->
                     	<el-table-column label="职责名称" prop="name"></el-table-column>
                     	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
-                    	<el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column>
+                    	<el-table-column width="100" label="职责状态" prop="disabled_t_description"></el-table-column>
                     	<el-table-column width="100" label="职责类型" prop="type_t_description"></el-table-column>
                     	<el-table-column width="100" label="关键职责" prop="isKey_t_description"></el-table-column>
                     	<el-table-column width="100" label="独立职责" prop="singleResp_t_description"></el-table-column>
                     	<!--el-table-column width="100" label="安全职责" prop="isSafeResp_t_description"></el-table-column-->
                     	<el-table-column label="上层职责" prop="pid_t_description"></el-table-column>
-						<el-table-column width="140" fixed="right" label="操作">
+						<el-table-column width="210" fixed="right" label="操作">
 							<template scope="scope">
 								<!-- el-tooltip class="item" effect="light" content="职责查看" placement="bottom">
 									<el-button size="mini" type="warning" icon="fa-check" @click="viewDetail(scope.row)"></el-button>
 								</el-tooltip -->
 								<el-tooltip class="item" effect="light" content="职责分解" placement="bottom">
-									<el-button size="mini" type="info" icon="fa-user-plus" @click="editSubResp(scope.row)"></el-button>
+									<el-button size="mini" type="primary" icon="fa-user-plus" @click="editSubResp(scope.row)"></el-button>
 								</el-tooltip>
 								<el-tooltip class="item" effect="light" content="下层职责" placement="bottom">
 									<el-button size="mini" type="success" icon="fa-users" @click="viewSubResp(scope.row)"></el-button>
 								</el-tooltip>
 								<el-tooltip class="item" effect="light" content="职责绑定" placement="bottom">
 									<el-button size="mini" type="warning" icon="fa-exchange" @click="bindResp(scope.row)"></el-button>
+								</el-tooltip>
+								<el-tooltip class="item" effect="light" content="上移" placement="bottom">
+									<el-button size="mini" type="info" icon="fa-arrow-circle-up" @click="changeOrder(scope.row.id, 0)"></el-button>
+								</el-tooltip>
+								<el-tooltip class="item" effect="light" content="下移" placement="bottom">
+									<el-button size="mini" type="info" icon="fa-arrow-circle-down" @click="changeOrder(scope.row.id, 1)"></el-button>
 								</el-tooltip>
 							</template>
 						</el-table-column>
@@ -87,8 +94,8 @@
 					<el-form-item label="职责描述" prop="description">
 			            <el-input v-model.trim="jatRespDepForm.description" placeholder="职责描述" ></el-input>
 			        </el-form-item>
-					<el-form-item label="停用该职责" prop="disabled">
-			            <sf-select v-model.trim="jatRespDepForm.disabled" placeholder="停用该职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_DISABLED" value-field="id" text-field="displayValue"/>
+					<el-form-item label="职责状态" prop="disabled">
+			            <sf-select v-model.trim="jatRespDepForm.disabled" placeholder="职责状态" url="utility/dictionary/loadDictItemsByName.do?name=JAT_DISABLED" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<!--el-form-item label="职责类型" prop="type">
 			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="职责类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
@@ -113,7 +120,7 @@
                           :query-condition="subRespCondition">
             <el-table-column label="职责名称" prop="name"></el-table-column>
            	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
-           	<!-- el-table-column width="120" label="停用该职责" prop="disabled_t_description"></el-table-column -->
+           	<!-- el-table-column width="120" label="职责状态" prop="disabled_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="职责类型" prop="type_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="关键职责" prop="isKey_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="独立职责" prop="singleResp_t_description"></el-table-column -->
@@ -179,11 +186,15 @@
                     key: 'name'
                 },
                 {
+                    title: '章节索引',
+                    key: 'idx'
+                },
+                {
                     title: '职责描述',
                     key: 'description'
                 },
                 {
-                    title: '停用该职责',
+                    title: '职责状态',
                     key: 'disabled'
                 },
                 {
@@ -299,6 +310,13 @@
 				this.jatRespBindForm.respName = row.name;
                 this.jatRespBindEditMode = 'edit';
 				this.showJatRespBindModal = true;
+			},
+			changeOrder: function(id, isDown) {
+				var self = this;
+				self.$post('jat/response/jatRespDep/changeOrder.do', {id: id, isDown: isDown}, function () {
+					self.$message.success('顺序已调整');
+					self.$refs['subRespTable'].reload();
+				});
 			},
 			deleteSubResp: function (row) {
 				var self = this;

@@ -59,7 +59,7 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 		{
 			if(!((String)myObj).equals(""))
 			{
-				List<String> myString = Arrays.asList(((String)myObj).split(","));; 
+				List<String> myString = Arrays.asList(((String)myObj).split(","));
 				for(int i=0; i<myString.size(); i++)
 				{
 					myMember.add(Integer.parseInt(myString.get(i)));
