@@ -61,6 +61,7 @@ public class JatRespDepServiceImpl implements JatRespDepService
 	@Override
 	public String 	save(JatRespDep jatRespDep)
 	{
+		if (ParameterUtils.isEmptyOrNull(jatRespDep.getIdx())) return " 必须填写章节索引";
 		try
 		{
 			if(ParameterUtils.isNotValidateId(jatRespDep.getId()))
