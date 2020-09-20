@@ -92,7 +92,7 @@ public class JatRespDepControl extends BasicControl
 		//设置分页和排序
 		queryFilter.addSorted(sortField, sortOrder);
 		queryFilter.setPageInfo(pageSize, pageIndex);
-		
+		queryFilter.addSorted("idx", "asc");
 		PagingBean page = this.jatRespDepService.queryRecords(queryFilter);
 		// TODO 导出时使用
 		// if("export".equals(method))

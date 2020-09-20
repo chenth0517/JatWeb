@@ -151,15 +151,15 @@ public class JatRespDepServiceImpl implements JatRespDepService
 	public String 	changeOrder(Integer id, Integer isDown)
 	{
 		JatRespDep currRecord = get(id);
-		if(currRecord == null) return "record not found";
+		if(currRecord == null) return "错误：未找到所选的记录。";
 		
 		String oldIdxStr = currRecord.getIdx();
-		if(ParameterUtils.isEmptyOrNull(oldIdxStr)) return "idx is null";
+		if(ParameterUtils.isEmptyOrNull(oldIdxStr)) return "错误：索引为空。";
 		
 		String oldNumStr = oldIdxStr.substring(oldIdxStr.lastIndexOf(".")+1);
 		Integer oldNum = Integer.parseInt(oldNumStr);
 		Integer newNum = oldNum;
-		Integer maxNum = 999;
+		Integer tmpNum = 999;
 		if(isDown == 1)
 		{
 			newNum = oldNum+1;
@@ -168,9 +168,41 @@ public class JatRespDepServiceImpl implements JatRespDepService
 		{
 			newNum = oldNum-1;
 		}
+		String tmpIdxStr = oldIdxStr.substring(0, oldIdxStr.lastIndexOf(".")+1) + tmpNum.toString();
 		String newIdxStr = oldIdxStr.substring(0, oldIdxStr.lastIndexOf(".")+1) + newNum.toString();
 		
-		
+		if (oldNum == 1 && isDown == 0) 
+		{
+			return "已经是第一条，不能再往上移了。";
+		}
+		else
+		{
+			String tmpSql = "select * from jat_resp_dep where idx like '"+newIdxStr+"%'";
+			List<Map<String, Object>> records = this.jdbcDao.queryForList(tmpSql);
+			if (records.size() == 0 && isDown == 1) return "已经是最后一条不能再往下移了。";
+			String sql01 = "update jat_resp_dep set idx = '"+tmpIdxStr+"' where idx = '"+newIdxStr+"';";
+			String sql02 = "update jat_resp_dep set idx = concat('"+tmpIdxStr+"',substr(idx,"+String.valueOf(newIdxStr.length()+1)+")) where idx like '"+newIdxStr+".%';";
+			String sql03 = "update jat_resp_dep set idx = '"+newIdxStr+"' where idx = '"+oldIdxStr+"';";
+			String sql04 = "update jat_resp_dep set idx = concat('"+newIdxStr+"',substr(idx,"+String.valueOf(oldIdxStr.length()+1)+")) where idx like '"+oldIdxStr+".%';";
+			String sql05 = "update jat_resp_dep set idx = '"+oldIdxStr+"' where idx = '"+tmpIdxStr+"';";
+			String sql06 = "update jat_resp_dep set idx = concat('"+oldIdxStr+"',substr(idx,"+String.valueOf(tmpIdxStr.length()+1)+")) where idx like '"+tmpIdxStr+".%';";
+			try {
+				logger.info(sql01);
+				jdbcDao.update(sql01);
+				logger.info(sql02);
+				jdbcDao.update(sql02);
+				logger.info(sql03);
+				jdbcDao.update(sql03);
+				logger.info(sql04);
+				jdbcDao.update(sql04);
+				logger.info(sql05);
+				jdbcDao.update(sql05);
+				logger.info(sql06);
+				jdbcDao.update(sql06);
+			} catch (Exception e) {			
+				e.printStackTrace();
+			}
+		}
 		return Constants.SUCCESS;
 	}
 	
@@ -200,7 +232,8 @@ public class JatRespDepServiceImpl implements JatRespDepService
 	public PagingBean	queryRecords(QueryFilter queryFilter)
 	{
 		String sql = "select e.* from jat_resp_dep e";
-		PagingBean pb = jdbcDao.queryForPaging(sql+queryFilter.getWhereSql(),queryFilter.getConditionValues(), queryFilter.getPageSize(), queryFilter.getPageIndex());
+		PagingBean pb = jdbcDao.queryForPaging(sql+queryFilter.getWhereSql(), queryFilter.getConditionValues(), 
+				queryFilter.getPageSize(), queryFilter.getPageIndex(), "idx");
 	 
 		List<Map<String,Object>> records = pb.getData();
 		Map<String,String> dictNameFieldNameMap = new HashMap<String,String>();
