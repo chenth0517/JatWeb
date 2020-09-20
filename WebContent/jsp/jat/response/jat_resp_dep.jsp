@@ -88,6 +88,9 @@
 					<!-- el-form-item label="职责编号" prop="id">
 			            <el-input v-model.trim="jatRespDepForm.id" placeholder="职责编号" readonly></el-input>
 			        </el-form-item -->
+					<el-form-item label="章节索引" prop="idx">
+			            <el-input v-model.trim="jatRespDepForm.idx" placeholder="章节索引" ></el-input>
+			        </el-form-item>
 					<el-form-item label="职责名称" prop="name">
 			            <el-input v-model.trim="jatRespDepForm.name" placeholder="职责名称" ></el-input>
 			        </el-form-item>
@@ -118,6 +121,7 @@
                           url="jat/response/jatRespDep/list.do" 
                           @current-change="onCurrentChange"
                           :query-condition="subRespCondition">
+            <el-table-column label="章节索引" prop="idx"></el-table-column>
             <el-table-column label="职责名称" prop="name"></el-table-column>
            	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
            	<!-- el-table-column width="120" label="职责状态" prop="disabled_t_description"></el-table-column -->
@@ -148,6 +152,9 @@
 					<!-- el-form-item label="关系编号" prop="id">
 			            <el-input v-model.trim="jatRespBindForm.respId" placeholder="职责编号" readonly></el-input>
 			        </el-form-item -->
+					<el-form-item label="章节索引" prop="idx">
+			            <el-input v-model.trim="jatRespBindForm.idx" placeholder="章节索引"  readonly></el-input>
+			        </el-form-item>
 					<el-form-item label="职责名称" prop="respName">
 			            <el-input v-model.trim="jatRespBindForm.respName" placeholder="职责名称"  readonly></el-input>
 			        </el-form-item>
@@ -180,6 +187,10 @@
                 {
                     title: '职责编号',
                     key: 'id'
+                },
+                {
+                    title: '章节索引',
+                    key: 'idx'
                 },
                 {
                     title: '职责名称',
@@ -315,7 +326,7 @@
 				var self = this;
 				self.$post('jat/response/jatRespDep/changeOrder.do', {id: id, isDown: isDown}, function () {
 					self.$message.success('顺序已调整');
-					self.$refs['subRespTable'].reload();
+					self.$refs['jatRespDepTable'].reload();
 				});
 			},
 			deleteSubResp: function (row) {
