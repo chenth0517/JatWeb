@@ -82,6 +82,7 @@
                     <el-table-column label="操作" align="center" width="200">
                         <template scope="scope">
                             <el-button size="small" type="info" @click="changeUserRole(scope.row)">岗位授权</el-button>
+                            <el-button size="small" type="success" @click="displayResp(scope.row)">查看职责</el-button>
                         </template>
                     </el-table-column>
                 </sf-table>
@@ -180,6 +181,22 @@
             <el-button type="primary" :loading="buttonLoading" @click="onRoleSelected">确定</el-button>
         </div>
     </el-dialog>
+    
+    <el-dialog title="查看职责" :visible.sync="respDlgVisible">
+		<sf-table ref="subRespTable"
+                  highlight-current-row
+                  :height="300"
+                  :show-import="false"
+                  url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do" 
+                  @current-change="onCurrentChange"
+                  :query-condition="respCondition">
+            <el-table-column width="120" label="与我相关" prop="type_t_description"></el-table-column>
+            <el-table-column label="职责名称" prop="respName"></el-table-column>
+        </sf-table>
+		<span slot="footer" class="dialog-footer">
+			<el-button type="primary" @click="respDlgVisible=false">确 定</el-button>
+		</span>
+	</el-dialog>
 </div>
 <script>
     var userManagement = new Vue({
@@ -256,8 +273,12 @@
             showOrgSelector: false,
             buttonLoading: false,
             showRoleSelector: false,
+            respDlgVisible: false,
             roleQueryCondition: {
                 roleName: ''
+            },
+            respCondition: {
+            	userId: -1
             },
             roleSelection: [],
             roleUser: null
@@ -448,6 +469,10 @@
                 }, function (json) {
                     self.$refs['roleTable'].setCurrentSelection(json.data);
                 });
+            },
+            displayResp: function (row) {
+            	this.respCondition.userId = row.id;
+                this.respDlgVisible = true;
             },
             onRoleSelectionChange: function(selection){
                 this.roleSelection = selection;

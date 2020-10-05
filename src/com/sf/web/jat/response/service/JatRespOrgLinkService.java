@@ -66,5 +66,5 @@ public interface JatRespOrgLinkService
 	 *@param 
 	 *@return
 	 */
-	 public PagingBean	queryCurrUserRespByRespType(QueryFilter queryFilter);
+	 public PagingBean	queryCurrUserRespByRespType(Integer respType, Integer userId, QueryFilter queryFilter);
 }

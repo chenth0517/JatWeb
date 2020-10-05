@@ -246,26 +246,50 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 	* @return
 	*/
 	@Override
-	public PagingBean	queryCurrUserRespByRespType(QueryFilter queryFilter)
+	public PagingBean	queryCurrUserRespByRespType(Integer respType, Integer userId, QueryFilter queryFilter)
 	{
 		Integer cuid = UserLoginRegister.currentUserId();
-		String whereClause = queryFilter.getNoWherePreFilledValWhereSql();
 		StringBuilder sb = new StringBuilder();
-		sb.append("select e1.name as resp_name, e1.disabled as resp_status, e1.type as resp_type from jat_resp_dep e1 where e1.id in ");
+		sb.append("select e1.id, e1.name as resp_name, e1.disabled as resp_status, e1.type as resp_type, tmp.type from jat_resp_dep e1 inner join ");
 		sb.append("( ");
-		sb.append("select e2.resp_id from jat_resp_org_link e2 where ");
-		sb.append(whereClause);		
-		sb.append(" and e2.org_id in ");
+		sb.append("select e2.resp_id, e2.type from jat_resp_org_link e2 where ");
+		if(!ParameterUtils.isEmptyOrNull(respType))
+		{
+			sb.append(" e2.type = ");
+			sb.append(respType);
+			sb.append(" and ");
+		}
+		sb.append(" e2.org_id in ");
 		sb.append("( ");
 		sb.append("select e3.org_id from sys_org_user_link e3 where e3.user_id = ");
-		sb.append(cuid.toString());
+		if(!ParameterUtils.isEmptyOrNull(userId))
+		{
+			sb.append(userId);
+		}
+		else
+		{
+			sb.append(cuid.toString());
+		}
 		sb.append(" ) ");
-		sb.append(")");
+		sb.append(") tmp on e1.id = tmp.resp_id order by tmp.type, e1.id");
 		String sql = sb.toString();
 		logger.info("[SQL_LOG]: "+sql);
 		PagingBean pb = jdbcDao.queryForPaging(sql, queryFilter.getPageSize(), queryFilter.getPageIndex());
 		
 		List<Map<String,Object>> records = pb.getData();
+		for (int i=0; i<records.size(); i++)
+		{
+			if(records.get(i).get("type").toString().equals("1"))
+			{
+				records.get(i).put("type_t_description", "负责");
+			}else if(records.get(i).get("type").toString().equals("2"))
+			{
+				records.get(i).put("type_t_description", "参与");
+			}else
+			{
+				records.get(i).put("type_t_description", "相关");
+			}
+		}
 		Map<String,String> dictNameFieldNameMap = new HashMap<String,String>();
 		dictNameFieldNameMap.put("respType", "JAT_RESP_TYPE");
 		dictNameFieldNameMap.put("respStatus", "JAT_DISABLED");

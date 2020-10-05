@@ -85,7 +85,7 @@ public class JatRespOrgLinkControl extends BasicControl
 	}
 
 	@SmartComment("用户对应的职责")
-	public SmartView listCurrUserRespByRespType(Integer respType,Integer pageSize,Integer pageIndex,String sortField,String sortOrder)
+	public SmartView listCurrUserRespByRespType(Integer respType, Integer userId, Integer pageSize,Integer pageIndex,String sortField,String sortOrder)
 	{
 		QueryFilter queryFilter = new QueryFilter();
 		if(!ParameterUtils.isEmptyOrNull(respType))
@@ -100,7 +100,7 @@ public class JatRespOrgLinkControl extends BasicControl
 		queryFilter.addSorted(sortField, sortOrder);
 		queryFilter.setPageInfo(pageSize, pageIndex);
 		
-		PagingBean page = this.jatRespOrgLinkService.queryCurrUserRespByRespType(queryFilter);
+		PagingBean page = this.jatRespOrgLinkService.queryCurrUserRespByRespType(respType, userId, queryFilter);
 		return this.pageView(page);
 	}
 
