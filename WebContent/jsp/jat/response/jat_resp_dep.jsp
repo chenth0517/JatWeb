@@ -45,7 +45,7 @@
                     	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
                     	<el-table-column width="95" label="职责状态" prop="disabled_t_description"></el-table-column>
                     	<el-table-column width="95" label="职责类型" prop="type_t_description"></el-table-column>
-                    	<el-table-column width="95" label="关键职责" prop="isKey_t_description"></el-table-column>
+                    	<el-table-column width="95" label="禁止剪裁" prop="isKey_t_description"></el-table-column>
                     	<el-table-column width="95" label="独立职责" prop="singleResp_t_description"></el-table-column>
                     	<!--el-table-column width="95" label="安全职责" prop="isSafeResp_t_description"></el-table-column-->
                     	<el-table-column label="上层职责" prop="pid_t_description"></el-table-column>
@@ -103,8 +103,8 @@
 					<!--el-form-item label="职责类型" prop="type">
 			            <sf-select v-model.trim="jatRespDepForm.type" placeholder="职责类型" url="utility/dictionary/loadDictItemsByName.do?name=JAT_RESP_TYPE" value-field="id" text-field="displayValue"/>
 			        </el-form-item-->
-					<el-form-item label="关键职责" prop="is_key">
-			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="关键职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
+					<el-form-item label="禁止剪裁" prop="is_key">
+			            <sf-select width="100%" v-model.trim="jatRespDepForm.isKey" placeholder="禁止剪裁" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
 			        </el-form-item>
 					<el-form-item label="独立职责" prop="single_resp">
 			            <sf-select v-model.trim="jatRespDepForm.singleResp" placeholder="独立职责" url="utility/dictionary/loadDictItemsByName.do?name=JAT_YES_OR_NO" value-field="id" text-field="displayValue"/>
@@ -126,7 +126,7 @@
            	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
            	<!-- el-table-column width="120" label="职责状态" prop="disabled_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="职责类型" prop="type_t_description"></el-table-column -->
-           	<!-- el-table-column width="100" label="关键职责" prop="isKey_t_description"></el-table-column -->
+           	<!-- el-table-column width="100" label="禁止剪裁" prop="isKey_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="独立职责" prop="singleResp_t_description"></el-table-column -->
            	<!-- el-table-column width="100" label="安全职责" prop="isSafeResp_t_description"></el-table-column -->
            	<el-table-column label="上层职责" prop="pid_t_description"></el-table-column>
