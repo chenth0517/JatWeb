@@ -38,16 +38,16 @@
                           @current-change="onCurrentChange"
                           @selection-change="onJatRespDepSelectionChange">
                         <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    	<el-table-column label="#" prop="__index" width="80" align="center"></el-table-column>
-                    	<el-table-column width="120" label="章节索引" prop="idx" align="center"></el-table-column>
+                    	<el-table-column label="#" prop="__index" width="60" align="center"></el-table-column>
+                    	<el-table-column width="90" label="章节索引" prop="idx" align="center"></el-table-column>
                     	<!-- el-table-column label="职责编号" prop="id"></el-table-column -->
                     	<el-table-column label="职责名称" prop="name"></el-table-column>
                     	<el-table-column width="300" label="职责描述" prop="description"></el-table-column>
-                    	<el-table-column width="100" label="职责状态" prop="disabled_t_description"></el-table-column>
-                    	<el-table-column width="100" label="职责类型" prop="type_t_description"></el-table-column>
-                    	<el-table-column width="100" label="关键职责" prop="isKey_t_description"></el-table-column>
-                    	<el-table-column width="100" label="独立职责" prop="singleResp_t_description"></el-table-column>
-                    	<!--el-table-column width="100" label="安全职责" prop="isSafeResp_t_description"></el-table-column-->
+                    	<el-table-column width="95" label="职责状态" prop="disabled_t_description"></el-table-column>
+                    	<el-table-column width="95" label="职责类型" prop="type_t_description"></el-table-column>
+                    	<el-table-column width="95" label="关键职责" prop="isKey_t_description"></el-table-column>
+                    	<el-table-column width="95" label="独立职责" prop="singleResp_t_description"></el-table-column>
+                    	<!--el-table-column width="95" label="安全职责" prop="isSafeResp_t_description"></el-table-column-->
                     	<el-table-column label="上层职责" prop="pid_t_description"></el-table-column>
 						<el-table-column width="210" fixed="right" label="操作">
 							<template scope="scope">
@@ -164,9 +164,9 @@
 					<el-form-item label="参与" prop="participate">
 			            <sf-select width="100%" v-model.trim="jatRespBindForm.participate" placeholder="参与" :multiple="true" url="jat/response/jatRespDep/loadSysOrg.do" value-field="id" text-field="name"/>
 			        </el-form-item>
-					<el-form-item label="相关" prop="relate">
+					<!-- el-form-item label="相关" prop="relate">
 			            <sf-select width="100%" v-model.trim="jatRespBindForm.relate" placeholder="关联" :multiple="true" url="jat/response/jatRespDep/loadSysOrg.do" value-field="id" text-field="name"/>
-			        </el-form-item>
+			        </el-form-item -->
     </sf-form-dialog>
 </div>
 <script>

@@ -87,7 +87,7 @@
 									 :show-import="false" 
 									 url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do?respType=1"
 								   >
-									<el-table-column label="职责名称" prop="respName" width="280"></el-table-column>
+									<el-table-column label="职责名称" prop="respName" width="380"></el-table-column>
 									<!-- el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column -->
 									<el-table-column label="职责状态" prop="respType_t_description" width="100"></el-table-column>
 								</sf-table>
@@ -111,7 +111,7 @@
 									 :show-import="false" 
 									 url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do?respType=2"
 								   >
-									<el-table-column label="职责名称" prop="respName" width="280"></el-table-column>
+									<el-table-column label="职责名称" prop="respName" width="380"></el-table-column>
 									<!-- el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column -->
 									<el-table-column label="职责状态" prop="respType_t_description" width="100"></el-table-column>
 								</sf-table>
@@ -122,7 +122,7 @@
 						<div class="div-relate">
 							<div style="margin-left:10px;margin-bottom:10px;">
 								<div id="header">
-									<h1 style="padding-top:10px;font-size:15px;">与我相关的职责</h1>
+									<h1 style="padding-top:10px;font-size:15px;">与我相关的职责(保留)</h1>
 								</div>
 							</div>
 							<div style="margin-left:10px;margin-right:10px;">
@@ -135,7 +135,7 @@
 									 :show-import="false" 
 									 url="jat/response/jatRespOrgLink/listCurrUserRespByRespType.do?respType=3"
 								   >
-									<el-table-column label="职责名称" prop="respName" width="280"></el-table-column>
+									<el-table-column label="职责名称" prop="respName" width="380"></el-table-column>
 									<!-- el-table-column label="职责类型" prop="respStatus_t_description" width="100"></el-table-column -->
 									<el-table-column label="职责状态" prop="respType_t_description" width="100"></el-table-column>
 								</sf-table>

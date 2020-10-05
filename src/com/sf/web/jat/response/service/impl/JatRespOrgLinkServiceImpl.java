@@ -15,6 +15,7 @@ import com.smartframework.core.i18n.I18n;
 import com.smartframework.web.core.queryfilter.QueryFilter;
 import com.smartframework.web.core.util.*;
 import com.smartframework.web.core.Constants;
+import com.smartframework.web.system.index.entity.UserLoginRegister;
 import com.smartframework.web.system.utility.util.CommonTranslateUtil;
 import com.smartframework.web.system.utility.util.CommonTranslateUtil.DictItemColumRefType;
 /**
@@ -247,6 +248,7 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 	@Override
 	public PagingBean	queryCurrUserRespByRespType(QueryFilter queryFilter)
 	{
+		Integer cuid = UserLoginRegister.currentUserId();
 		String whereClause = queryFilter.getNoWherePreFilledValWhereSql();
 		StringBuilder sb = new StringBuilder();
 		sb.append("select e1.name as resp_name, e1.disabled as resp_status, e1.type as resp_type from jat_resp_dep e1 where e1.id in ");
@@ -255,8 +257,9 @@ public class JatRespOrgLinkServiceImpl implements JatRespOrgLinkService
 		sb.append(whereClause);		
 		sb.append(" and e2.org_id in ");
 		sb.append("( ");
-		sb.append("select e3.org_id from sys_org_user_link e3 where e3.user_id = 43 ");
-		sb.append(") ");
+		sb.append("select e3.org_id from sys_org_user_link e3 where e3.user_id = ");
+		sb.append(cuid.toString());
+		sb.append(" ) ");
 		sb.append(")");
 		String sql = sb.toString();
 		logger.info("[SQL_LOG]: "+sql);
