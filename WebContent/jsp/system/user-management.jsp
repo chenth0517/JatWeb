@@ -67,7 +67,14 @@
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
                     <el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>
                     <el-table-column label="账户名" prop="userName" sortable="custom"></el-table-column>
-                    <el-table-column label="姓名" prop="realName" sortable="custom"></el-table-column>
+                    <el-table-column label="姓名" prop="realName" sortable="custom">
+                    	<template scope="scope">{{scope.row.realName}}
+							<el-tooltip class="item" effect="light" placement="right">
+								<div slot="content">{{demo}}</div>
+								<el-button size="mini" circle icon="fa-search"></el-button>
+							</el-tooltip>
+						</template>
+                    </el-table-column>
                     <el-table-column label="账户状态" align="center" width="120">
                         <template scope="scope">
                             <el-tag type="danger" v-if="scope.row.deleted==1">删除</el-tag>
@@ -207,6 +214,7 @@
                 parentField: 'pid',
                 label: 'name'
             },
+            demo: '此处显示岗位',
             showOrgModal: false,
             orgEditMode: 'add',
             currentOrgNode: null,
