@@ -63,19 +63,26 @@
                         <el-button type="primary" icon="fa-users" @click="changeOrg">变更组织机构</el-button>
                     </div>
                 </sf-toolbar>
-                <sf-table ref="userTable" :height="500" :export-columns="userTableColumns" url="user/list.do" :query-condition="queryCondition" @selection-change="onSelectionChange">
+                <sf-table ref="userTable" 
+                		:height="500" 
+                		:export-columns="userTableColumns" 
+                		url="user/list.do" 
+                		:query-condition="queryCondition" 
+                		@selection-change="onSelectionChange"
+                		:data-function="addRole">
                     <el-table-column type="selection" width="50" align="center"></el-table-column>
-                    <el-table-column label="#" prop="__index" width="50" align="center"></el-table-column>
-                    <el-table-column label="账户名" prop="userName" sortable="custom"></el-table-column>
-                    <el-table-column label="姓名" prop="realName" sortable="custom">
-                    	<template scope="scope">{{scope.row.realName}}
+                    <el-table-column label="#" prop="__index" width="60" align="center"></el-table-column>
+                    <el-table-column label="账户名" prop="userName" width="160" sortable="custom"></el-table-column>
+                    <el-table-column label="姓名" prop="realName" width="160" sortable="custom">
+                    	<!-- template scope="scope">{{scope.row.realName}}
 							<el-tooltip class="item" effect="light" placement="right">
 								<div slot="content">{{demo}}</div>
 								<el-button size="mini" circle icon="fa-search"></el-button>
 							</el-tooltip>
-						</template>
+						</template -->
                     </el-table-column>
-                    <el-table-column label="账户状态" align="center" width="120">
+                    <el-table-column label="岗位" prop="roleString"></el-table-column>
+                    <el-table-column label="账户状态" align="center" width="95">
                         <template scope="scope">
                             <el-tag type="danger" v-if="scope.row.deleted==1">删除</el-tag>
                             <el-tag :type="scope.row.disabled ? 'danger' : 'success' " v-else>{{scope.row.disabled ? '锁定' : '正常'}}</el-tag>
@@ -85,8 +92,8 @@
                         </template>
                     </el-table-column>
                     <el-table-column label="邮箱" prop="email" width="200"></el-table-column>
-                    <el-table-column label="联系电话" prop="phone" width="150"></el-table-column>
-                    <el-table-column label="操作" align="center" width="200">
+                    <el-table-column label="联系电话" prop="phone" width="140"></el-table-column>
+                    <el-table-column label="操作" align="center" width="190">
                         <template scope="scope">
                             <el-button size="small" type="info" @click="changeUserRole(scope.row)">岗位授权</el-button>
                             <el-button size="small" type="success" @click="displayResp(scope.row)">查看职责</el-button>
@@ -214,7 +221,7 @@
                 parentField: 'pid',
                 label: 'name'
             },
-            demo: '此处显示岗位',
+            demo: {},
             showOrgModal: false,
             orgEditMode: 'add',
             currentOrgNode: null,
@@ -502,11 +509,29 @@
                 this.buttonLoading = false;
                 this.roleQueryCondition.roleName = '';
                 this.$refs['roleTable'].clearSelection();
-            }
+            },
+            getlistRoleString:function(){
+				var self=this;
+        	    this.$post("jat/addition/jatSysAddition/listRoleString.do",self.queryCondition, function(json){
+                    var data =json.data;
+                    var tooltip =json.tooltip;
+					
+					self.demo=data;
+					var aaa=1;
+                }); 
+        	},
+        	addRole:function(data){
+        		var roleString=this.demo;
+        		for(var i=0;i<data.length;i++){
+        			data[i].roleString = roleString[data[i].id];
+        		}
+        		return data;
+        	}
         },
         mounted: function(){
             this.$refs['dialog1'].rendered = true;
             this.$refs['dialog2'].rendered = true;
+            this.getlistRoleString();
         }
     })
 </script>
